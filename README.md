@@ -1,6 +1,6 @@
 # Spliced
 
-<img src="https://github.com/buildsi/spliced/raw/main/docs/img/spliced.png" width="200px">
+<img src="https://github.com/buildsi/spliced/raw/main/docs/img/spliced.png" width="300px">
 
 🚧️ under development 🚧️
 
