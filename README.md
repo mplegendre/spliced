@@ -1,6 +1,6 @@
 # Spliced
 
-![docs/img/spliced.png](docs/img/spliced.png)
+<img src="https://github.com/buildsi/spliced/raw/main/docs/img/spliced.png" width="200px">
 
 🚧️ under development 🚧️
 
