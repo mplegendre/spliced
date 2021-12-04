@@ -65,6 +65,42 @@ you'll see:
 3. Running splice predictors (not developed yet) but will give a prediction if the splice will work!
 4. Commands, if provided, are then run to give an "actual" report of if it worked (according to the command) or not.
 
+By default, the predictors used will be all that are provided (libabigail and symbolator and an actual) and if
+any predictor dependency is missing, a warning will be printed and it will be skipped. If you want to filter
+to a specific number of predictors, use `--predictor` for each.
+
+```bash
+$ spliced splice --package curl@7.50.2 --splice zlib --experiment curl --predictor actual --predictor symbolator
+```
+
+The above would run symbolator and an actual run (given a command) only. Here is what an entire run looks like, with a testing command and 
+output saved to a json file with `--outfile`
+
+```bash
+$ spliced splice --package curl@7.50.2 --splice zlib --runner spack --replace zlib --experiment curl --outfile examples/curl-result.json curl --head https://linuxize.com/
+Concretizing curl@7.50.2
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/berkeley-db-18.1.40-pdlzkb4o4qsw3nglppv7eqjm7lepqvod
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/libiconv-1.16-infpf4xwcb7253odbry6ljjcsat2ksp5
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/pkgconf-1.8.0-5bckkoeicca3dtolbeyz6tnnyxwcsfn5
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/diffutils-3.8-ae4ve7adrxntd2kafm4xxmeyhrwpzpmg
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/ncurses-6.2-5bzr63iqgpogufanleaw2fzjxnzziz67
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/bzip2-1.0.8-doeyikigv6jk4dk6fdxm3cl5j7j465if
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/readline-8.1-wkga37hicua476jm2bjjmuzufz6h574j
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/gdbm-1.19-wuhyaf477mw6nmgftp3gvrxic7qzgpso
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/perl-5.34.0-bvgnm2ejnajpvaruta22d5c24g6qi4zu
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/openssl-1.1.1l-antishvjbtniecep64dku2cenh7hkonc
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-a7ncgyeci2upn3vimpc62whvdkagihou
+Testing splicing in (and out) zlib@1.2.11
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px
+Testing splicing in (and out) zlib@1.2.8
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.8-mtdthhgpvdcqsfmbqzzvdlvain56j6th
+Testing splicing in (and out) zlib@1.2.3
+[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.3-mum2pz5di4xf4pjkyac3olgpnbrtpxph
+Making predictions for actual
+Making predictions for symbolator
+```
+
 
 ### Splice Matrix
 

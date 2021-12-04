@@ -7,6 +7,8 @@
 
 # TODO can we run in parallel?
 
+from spliced.logger import logger
+import spliced.predict
 import spliced.schemas
 import spliced.utils as utils
 import jsonschema
@@ -34,12 +36,11 @@ class Splice:
         self.predictions = {}
         self.libs = []
         self.package = package
-        self.corpora = []
         self._experiment = None
         self.success = success
         self.result = result
         self.splice = splice
-        self.command = command        
+        self.command = command
 
     def to_dict(self):
         """
@@ -49,7 +50,6 @@ class Splice:
             "binaries": self.binaries,
             "predictions": self.predictions,
             "libs": self.libs,
-            "corpora": self.corpora,
             "experiment": self._experiment,
             "result": self.result,
             "success": self.success,
@@ -68,6 +68,7 @@ class Experiment:
     """
     A base Experiment holds information for a splice experiment!
     """
+
     def __init__(self):
         self.splices = []
         self.config_file = None
@@ -100,6 +101,26 @@ class Experiment:
         run the experiment.
         """
         raise NotImplementedError
+
+    def run_parallel(self):
+        # TODO- will be nice to possibly speed things up!
+        pass
+
+    def predict(self, names=None):
+        """
+        Given a single named predictor (or a list to skip) make predictions.
+        """
+        predictors = spliced.predict.get_predictors(names)
+        if not predictors:
+            logger.warning("No matching predictors were found.")
+            return
+
+        for name, predictor in predictors.items():
+            logger.info("Making predictions for %s" % name)
+
+            # Result is added to splice
+            for splice in self.splices:
+                predictor.predict(splice)
 
     def to_json(self):
         """

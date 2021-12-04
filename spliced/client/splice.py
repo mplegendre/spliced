@@ -16,7 +16,7 @@ def main(args, parser, extra, subparser):
     elif not args.runner:
         sys.exit("You must provide an experiment runner.")
     else:
-        sys.exit("Runner %s is not recognized")
+        sys.exit("Runner %s is not recognized" % args.runner)
 
 
 def run_spack_experiment(args, command):
@@ -39,16 +39,17 @@ def run_spack_experiment(args, command):
 
     # Perform the splice!
     experiment.run()
-    results = experiment.to_dict()
 
-    ######
-    # TODO need to run the other splicers here
-    ######
+    # TODO can we run_parallel here as an option? And do splice -> predict as such
+    # And make predictions
+    experiment.predict(args.predictor)
+    results = experiment.to_dict()
 
     if args.outfile:
         utils.write_json(results, args.outfile)
     else:
-        json.dumps(results, indent=4)
+        print(json.dumps(results, indent=4))
+
 
 def add_spack_to_path():
     """

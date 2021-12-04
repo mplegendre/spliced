@@ -140,7 +140,7 @@ class SpackExperiment(Experiment):
         if self.command:
 
             # We need to know the binary of interest from the command
-            binary = shlex.split(command)[0]
+            binary = shlex.split(self.command)[0]
 
         # Add binaries to the libary
         splice.binaries = list(add_contenders(spliced_spec, "bin", binary))

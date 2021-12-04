@@ -6,23 +6,18 @@
 from spliced.logger import logger
 from subprocess import Popen, PIPE, STDOUT
 import os
+import shlex
 
 
-def which(software=None, strip_newline=True):
+def which(software, strip_newline=True):
     """get_install will return the path to where Singularity (or another
     executable) is installed.
     """
-    if software is None:
-        software = "singularity"
     cmd = ["which", software]
-    try:
-        result = run_command(cmd)
-        if strip_newline is True:
-            result["message"] = result["message"].strip("\n")
-        return result
-
-    except:  # FileNotFoundError
-        return None
+    result = run_command(cmd)
+    if strip_newline is True:
+        result["message"] = result["message"].strip("\n")
+    return result
 
 
 def check_install(software, quiet=True, command="--version"):
@@ -54,7 +49,7 @@ def get_installdir():
     return os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
-def run_command(cmd, sudo=False, stream=False):
+def run_command(cmd, stream=False):
     """run_command uses subprocess to send a command to the terminal.
 
     Parameters
@@ -64,23 +59,16 @@ def run_command(cmd, sudo=False, stream=False):
     if none specified, will alert that command failed.
 
     """
+    if not isinstance(cmd, list):
+        cmd = shlex.split(cmd)
     stdout = PIPE if not stream else None
-    if sudo is True:
-        cmd = ["sudo"] + cmd
 
-    try:
-        output = Popen(cmd, stderr=STDOUT, stdout=stdout)
-
-    except FileNotFoundError:
-        cmd.pop(0)
-        output = Popen(cmd, stderr=STDOUT, stdout=PIPE)
-
+    output = Popen(cmd, stderr=STDOUT, stdout=PIPE)
     t = output.communicate()[0], output.returncode
     output = {"message": t[0], "return_code": t[1]}
 
     if isinstance(output["message"], bytes):
         output["message"] = output["message"].decode("utf-8")
-
     return output
 
 

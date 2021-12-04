@@ -1,0 +1,94 @@
+[
+    {
+        "binaries": [
+            "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-7ybfviq4uauvq4hhggxn3npc6ib4clr3/bin/curl"
+        ],
+        "predictions": {
+            "actual": [
+                {
+                    "message": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\nHTTP/1.1 403 Forbidden\r\nDate: Sat, 04 Dec 2021 01:07:32 GMT\r\nContent-Type: text/html; charset=UTF-8\r\nConnection: close\r\nCF-Chl-Bypass: 1\r\nPermissions-Policy: accelerometer=(),autoplay=(),camera=(),clipboard-read=(),clipboard-write=(),fullscreen=(),geolocation=(),gyroscope=(),hid=(),interest-cohort=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=()\r\nCache-Control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0\r\nExpires: Thu, 01 Jan 1970 00:00:01 GMT\r\nX-Frame-Options: SAMEORIGIN\r\nExpect-CT: max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"\r\nReport-To: {\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=7qbpxfTO2iFvTK6xWWcdT7JXLgStMWxeykf2sFLxpAjJSLvAULQJNMvLfLpgyjPxIM8Vw9TRr2DNlkfmKfmZhlXrMHYSWDzJpTi4lW6i7cXwmYINMnNgghJYEctQMw8R7krO0LFNOO8FEw%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}\r\nNEL: {\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains; preload\r\nX-Content-Type-Options: nosniff\r\nServer: cloudflare\r\nCF-RAY: 6b812372aac4638a-ORD\r\nalt-svc: h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-27=\":443\"; ma=86400\r\n\r\n",
+                    "return_code": 0,
+                    "prediction": true,
+                    "command": "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-7ybfviq4uauvq4hhggxn3npc6ib4clr3/bin/curl --head https://linuxize.com/"
+                }
+            ],
+            "symbolator": {
+                "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-7ybfviq4uauvq4hhggxn3npc6ib4clr3/bin/curl": {
+                    "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px/lib/libz.so.1.2.11": true
+                }
+            }
+        },
+        "libs": [
+            {
+                "dep": "zlib@1.2.11%gcc@9.3.0+optimize+pic+shared arch=linux-ubuntu20.04-skylake",
+                "paths": [
+                    "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px/lib/libz.so.1.2.11"
+                ]
+            }
+        ],
+        "experiment": null,
+        "result": "splice-success",
+        "success": true,
+        "splice": "zlib@1.2.11",
+        "package": "curl@7.50.2"
+    },
+    {
+        "binaries": [
+            "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-uyqxrcmgypzjxolcxsfrkjtvbptcoeud/bin/curl"
+        ],
+        "predictions": {
+            "actual": [
+                {
+                    "message": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\nHTTP/1.1 403 Forbidden\r\nDate: Sat, 04 Dec 2021 01:07:33 GMT\r\nContent-Type: text/html; charset=UTF-8\r\nConnection: close\r\nCF-Chl-Bypass: 1\r\nPermissions-Policy: accelerometer=(),autoplay=(),camera=(),clipboard-read=(),clipboard-write=(),fullscreen=(),geolocation=(),gyroscope=(),hid=(),interest-cohort=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=()\r\nCache-Control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0\r\nExpires: Thu, 01 Jan 1970 00:00:01 GMT\r\nX-Frame-Options: SAMEORIGIN\r\nExpect-CT: max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"\r\nReport-To: {\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=rNqO6HRZsOL3%2F7JIX077X%2BQ%2B2gdKkpAaex%2FBYQlO4i46JJ%2Fr5B1Dg34z6%2FBmY%2F%2BQJCQYabk9Gx1Xecv8oXgmh5ev3t%2BTTDgiHLNDAaFZHYbi4FsozTL9a1%2F%2F4aUxmbzQlWs3%2Biphc42xpg%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}\r\nNEL: {\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains; preload\r\nX-Content-Type-Options: nosniff\r\nServer: cloudflare\r\nCF-RAY: 6b8123738dbe2c11-ORD\r\nalt-svc: h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-27=\":443\"; ma=86400\r\n\r\n",
+                    "return_code": 0,
+                    "prediction": true,
+                    "command": "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-uyqxrcmgypzjxolcxsfrkjtvbptcoeud/bin/curl --head https://linuxize.com/"
+                }
+            ],
+            "symbolator": {
+                "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-uyqxrcmgypzjxolcxsfrkjtvbptcoeud/bin/curl": {
+                    "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.8-mtdthhgpvdcqsfmbqzzvdlvain56j6th/lib/libz.so.1.2.8": true
+                }
+            }
+        },
+        "libs": [
+            {
+                "dep": "zlib@1.2.8%gcc@9.3.0+optimize+pic+shared arch=linux-ubuntu20.04-skylake",
+                "paths": [
+                    "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.8-mtdthhgpvdcqsfmbqzzvdlvain56j6th/lib/libz.so.1.2.8"
+                ]
+            }
+        ],
+        "experiment": null,
+        "result": "splice-success",
+        "success": true,
+        "splice": "zlib@1.2.8",
+        "package": "curl@7.50.2"
+    },
+    {
+        "binaries": [
+            "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-6wfkzljni43ly6uh3ocgotxgrlq5b347/bin/curl"
+        ],
+        "predictions": {
+            "actual": [
+                {
+                    "message": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\nHTTP/1.1 403 Forbidden\r\nDate: Sat, 04 Dec 2021 01:07:33 GMT\r\nContent-Type: text/html; charset=UTF-8\r\nConnection: close\r\nCF-Chl-Bypass: 1\r\nPermissions-Policy: accelerometer=(),autoplay=(),camera=(),clipboard-read=(),clipboard-write=(),fullscreen=(),geolocation=(),gyroscope=(),hid=(),interest-cohort=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=()\r\nCache-Control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0\r\nExpires: Thu, 01 Jan 1970 00:00:01 GMT\r\nX-Frame-Options: SAMEORIGIN\r\nExpect-CT: max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"\r\nReport-To: {\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=3%2BztzQcSul%2BM%2F0TX716OuDtoSHRsyYSLG4qpGr946MviZ4Re9N8%2BUCxnT0Gz8%2BfSe5ShCTuIffaM4gB5%2FZJPPJvc0rb%2F9nTANKNscCroZ%2FVNStPnNz0Ud3lFv3%2FqM54lej%2FL%2FOl0VAUh0Q%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}\r\nNEL: {\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains; preload\r\nX-Content-Type-Options: nosniff\r\nServer: cloudflare\r\nCF-RAY: 6b8123746e216327-ORD\r\nalt-svc: h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-27=\":443\"; ma=86400\r\n\r\n",
+                    "return_code": 0,
+                    "prediction": true,
+                    "command": "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-6wfkzljni43ly6uh3ocgotxgrlq5b347/bin/curl --head https://linuxize.com/"
+                }
+            ]
+        },
+        "libs": [
+            {
+                "dep": "zlib@1.2.3%gcc@9.3.0+optimize+pic+shared arch=linux-ubuntu20.04-skylake",
+                "paths": []
+            }
+        ],
+        "experiment": null,
+        "result": "splice-success",
+        "success": true,
+        "splice": "zlib@1.2.3",
+        "package": "curl@7.50.2"
+    }
+]

@@ -86,6 +86,14 @@ def get_parser():
         dest="replace",
         help="splice IN this package or library (overridden by replace in config yaml)",
     )
+
+    splice.add_argument(
+        "--predictor",
+        dest="predictor",
+        help="A named predictor to use (if not defined, defaults to all)",
+        action="append",
+    )
+
     splice.add_argument(
         "-r",
         "--runner",

@@ -56,6 +56,9 @@ def generate_spack_matrix(args, experiment, command=None):
     # We will build up a matrix of container and associated compilers
     matrix = []
 
+    # Command can come from command line or config file
+    command = command or experiment.command
+
     # Generate list of commands
     for version in versions:
 
@@ -70,7 +73,7 @@ def generate_spack_matrix(args, experiment, command=None):
         if args.container:
             cmd = "%s --containers %s" % (cmd, args.container)
         if command:
-            cmd = '%s --command "%s"' % (cmd, command)
+            cmd = "%s %s" % (cmd, command)
         matrix.append(
             {
                 "command": cmd,
