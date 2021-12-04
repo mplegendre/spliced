@@ -1,4 +1,4 @@
-name: Build Container Bases
+name: Build Ubuntu Bases
 on: workflow_dispatch
 
 jobs:
@@ -12,9 +12,6 @@ jobs:
                     # tag           dockerfile in docker/     platforms
         dockerfile: [[ubuntu-18.04, Dockerfile.ubuntu-18.04, 'linux/amd64'],
                      [ubuntu-20.04, Dockerfile.ubuntu-20.04, 'linux/amd64'],
-                     [centos-7, Dockerfile.centos-7, 'linux/amd64'],
-                     [centos-8, Dockerfile.centos-8, 'linux/amd64'],
-                     [fedora, Dockerfile.fedora, 'linux/amd64']]
 
     name: Build ${{ matrix.dockerfile[0] }}
     steps:
