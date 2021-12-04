@@ -1,4 +1,5 @@
 from .terminal import (
+    add_spack_to_path,
     run_command,
     check_install,
     get_installdir,

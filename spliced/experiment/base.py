@@ -32,15 +32,24 @@ class Splice:
         result=None,
         success=False,
     ):
-        self.binaries = []
+
+        # Typically has "original" and "spliced"
+        self.binaries = {}
+        self.libs = {}
+
         self.predictions = {}
-        self.libs = []
         self.package = package
         self._experiment = None
         self.success = success
         self.result = result
         self.splice = splice
         self.command = command
+
+    def match_libs(self):
+        """
+        Try to match dependencies between spliced/original library for comparison
+        """
+        pass
 
     def to_dict(self):
         """

@@ -21,18 +21,22 @@ class SymbolatorPrediction(Prediction):
         # A corpora cache to not derive again if we already have
         corpora = {}
 
-        # Create a set of predictions for each binary / lib combination
+        # Create a set of predictions for each spliced binary / lib combination
         predictions = {}
-        for binary in splice.binaries:
+        for binary in splice.binaries.get("spliced", []):
+
+            if binary not in predictions:
+                predictions[binary] = {}
             if binary not in corpora:
                 corpora[binary] = get_corpus(binary)
-            predictions[binary] = {}
-            for libset in splice.libs:
+
+            for libset in splice.libs.get("spliced", []):
                 for lib in libset["paths"]:
                     if lib not in corpora:
                         corpora[lib] = get_corpus(lib)
 
                     # Make the splice prediction with symbolator
+                    # TODO this structure seems all wrong...
                     sym_result = run_symbols_splice(corpora[binary], corpora[lib])
                     predictions[binary][lib] = (
                         True if not sym_result["missing"] else False

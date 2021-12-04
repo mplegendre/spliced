@@ -6,6 +6,7 @@
 from spliced.logger import logger
 from subprocess import Popen, PIPE, STDOUT
 import os
+import sys
 import shlex
 
 
@@ -91,6 +92,24 @@ def confirm_action(question, force=False):
         return False
 
     return True
+
+
+def add_spack_to_path():
+    """
+    Find spack and add to path, allowing for import of spack modules
+    """
+    # Find path to spack install
+    spack = which("spack-python")
+    if not spack["message"]:
+        sys.exit("Make sure spack and spack-python are on your path for this runner.")
+
+    # Find spack's location and its prefix, add libs and external libs
+    spack_python = spack["message"]
+    spack_prefix = os.path.dirname(os.path.dirname(spack_python))
+    spack_lib_path = os.path.join(spack_prefix, "lib", "spack")
+    spack_external_libs = os.path.join(spack_lib_path, "external")
+    for path in [spack_lib_path, spack_external_libs]:
+        sys.path.insert(0, path)
 
 
 def confirm_uninstall(filename, force=False):

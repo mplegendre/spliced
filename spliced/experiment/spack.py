@@ -21,8 +21,8 @@ try:
     import spack.rewiring
     import spack.bootstrap
     from spack.spec import Spec
-except:
-    sys.exit("This needs to be run from spack python.")
+except Exception as e:
+    sys.exit("This needs to be run from spack python, also: %s" % e)
 
 
 class SpackExperiment(Experiment):
@@ -46,7 +46,6 @@ class SpackExperiment(Experiment):
 
         For many cases, specB and specC might be the same, but not always.
         """
-        # TODO: spack does not support a specC splice yet, so the splice = replace
         transitive = kwargs.get("transitive", True)
 
         print("Concretizing %s" % self.package)
@@ -126,11 +125,11 @@ class SpackExperiment(Experiment):
         # If we get here, a success case!
         splice = self.add_splice("splice-success", success=True, splice=splice_name)
 
-        # Prepare the libs / binaries for the splice
-        self._populate_splice(splice, spliced_spec)
+        # Prepare the libs / binaries for the splice (also include original dependency paths)
+        self._populate_splice(splice, spliced_spec, spec_main)
         return self.splices
 
-    def _populate_splice(self, splice, spliced_spec):
+    def _populate_splice(self, splice, spliced_spec, original):
         """
         Prepare each splice to also include binaries and libs involved.
         """
@@ -142,21 +141,35 @@ class SpackExperiment(Experiment):
             # We need to know the binary of interest from the command
             binary = shlex.split(self.command)[0]
 
-        # Add binaries to the libary
-        splice.binaries = list(add_contenders(spliced_spec, "bin", binary))
+        # Add binaries to the libary for both spliced and original lib
+        splice.binaries["spliced"] = list(add_contenders(spliced_spec, "bin", binary))
+        splice.binaries["original"] = list(add_contenders(original, "bin", binary))
 
-        # For each depedency, add libraries
-        deps = spliced_spec.dependencies()
-        seen = set([x.name for x in deps])
-        while deps:
-            dep = deps.pop(0)
-            new_deps = [x for x in dep.dependencies() if x.name not in seen]
-            [seen.add(x.name) for x in new_deps]
-            deps += new_deps
-            if dep.name == self.splice:
-                splice.libs.append(
-                    {"dep": str(dep), "paths": list(add_contenders(dep, "lib"))}
-                )
+        # And add libs for the spliced dependency (each from original and spliced)
+        splice.libs["spliced"] = add_libraries(spliced_spec, self.splice)
+        splice.libs["original"] = add_libraries(original, self.splice)
+
+
+def add_libraries(spec, library_name):
+    """
+    Given a spliced spec, get a list of its libraries matching a name (e.g., a library
+    that has been spliced in). E.g., if the spec is curl, we might look for zlib.
+    """
+    # We will return a list of libraries
+    libs = []
+
+    # For each depedency, add libraries
+    deps = spec.dependencies()
+    seen = set([x.name for x in deps])
+    while deps:
+        dep = deps.pop(0)
+        new_deps = [x for x in dep.dependencies() if x.name not in seen]
+        [seen.add(x.name) for x in new_deps]
+        deps += new_deps
+        if dep.name == library_name:
+            libs.append({"dep": str(dep), "paths": list(add_contenders(dep, "lib"))})
+
+    return libs
 
 
 def add_contenders(spec, loc="lib", match=None):

@@ -13,8 +13,10 @@ import sys
 import json
 
 
-def main(args, parser, extra, subparser):
-
+def matrix(args, parser, extra, subparser):
+    """
+    Upper level function for generating an experiment matrix
+    """
     # Generate a base experiment
     experiment = spliced.experiment.Experiment()
     experiment.load(args.config_yaml)
@@ -23,35 +25,97 @@ def main(args, parser, extra, subparser):
         generate_spack_matrix(args, experiment, " ".join(extra))
 
 
-def generate_spack_matrix(args, experiment, command=None):
-    """A spack matrix derives versions from spack, and prepares
-    to generate commands (and metadata) to support a spack splice
-    experiment
+def command(args, parser, extra, subparser):
     """
-    # Get versions of package
+    Generate command list
+    """
+    # Generate a base experiment
+    experiment = spliced.experiment.Experiment()
+    experiment.load(args.config_yaml)
+
+    if args.generator == "spack":
+        generate_spack_commands(args, experiment, " ".join(extra))
+
+
+def get_package_versions(package):
+    """
+    Given a spack package, get a list of all versions
+    """
     versions = requests.get(
         "https://raw.githubusercontent.com/spack/packages/main/data/packages/%s.json"
-        % experiment.package
+        % package
     )
     if versions.status_code != 200:
         sys.exit("Failed to get package versions")
     versions = versions.json()
-    versions = list(set([x["name"] for x in versions["versions"]]))
+    return list(set([x["name"] for x in versions["versions"]]))
 
+
+def get_compiler_labels(container):
+    """
+    Given a container URI, get all associated compiler labels (if they exist)
+    """
     # If we have a container, get compilers. Otherwise default to "all"
     labels = ["all"]
 
-    if args.container:
-        response = requests.get("https://crane.ggcr.dev/config/%s" % args.container)
+    if container:
+        response = requests.get("https://crane.ggcr.dev/config/%s" % container)
         if response.status_code != 200:
             sys.exit(
                 "Issue retrieving image config for % container: %s"
-                % (args.container, response.reason)
+                % (container, response.reason)
             )
 
         config = response.json()
         labels = config["config"].get("Labels", {}).get("org.spack.compilers")
         labels = [x for x in labels.strip("|").split("|") if x]
+    return labels
+
+
+def generate_spack_commands(args, experiment, command=None):
+    """
+    Generate a list of spliced commands
+    """
+    versions = get_package_versions(experiment.package)
+    labels = get_compiler_labels(args.container)
+    commands = []
+
+    # Command can come from command line or config file
+    command = command or experiment.command
+
+    # Generate list of commands
+    for version in versions:
+
+        # versioned package
+        package = "%s@%s" % (experiment.package, version)
+        cmd = "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s" % (
+            package,
+            experiment.splice,
+            experiment.replace,
+            experiment.name,
+        )
+        if args.container:
+            cmd = "%s --containers %s" % (cmd, args.container)
+        if command:
+            cmd = "%s %s" % (cmd, command)
+        commands.append(cmd)
+
+    # flatten to be printable
+    commands = "\n".join(commands)
+
+    if args.outfile:
+        utils.write_file(commands, args.outfile)
+    else:
+        print(commands)
+
+
+def generate_spack_matrix(args, experiment, command=None):
+    """A spack matrix derives versions from spack, and prepares
+    to generate commands (and metadata) to support a spack splice
+    experiment
+    """
+    versions = get_package_versions(experiment.package)
+    labels = get_compiler_labels(args.container)
 
     # We will build up a matrix of container and associated compilers
     matrix = []

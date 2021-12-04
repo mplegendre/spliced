@@ -109,43 +109,50 @@ def get_parser():
         help="experiment name or identifier",
     )
 
-    # Generate matrix of splice commands and outputs, etc.
+    # Just generate a list of commands (no matrix!)
     matrix = subparsers.add_parser(
+        "command",
+        description="generate a list of commands to run splices (instead of a matrix",
+    )
+
+    # Generate matrix of splice commands and outputs, etc.
+    command = subparsers.add_parser(
         "matrix",
         description="generate matrix of splices (intended for GitHub actions or similar)",
     )
-    matrix.add_argument(
-        "-g",
-        "--generator",
-        dest="generator",
-        help="generator to use (defaults to spack)",
-        choices=["spack"],
-        default="spack",
-    )
+    for cmd in [matrix, command]:
+        cmd.add_argument(
+            "-g",
+            "--generator",
+            dest="generator",
+            help="generator to use (defaults to spack)",
+            choices=["spack"],
+            default="spack",
+        )
 
-    matrix.add_argument(
-        "-l",
-        "--limit",
-        help="Set a limit for job entries to generate (defaults to 0, no limit)",
-        type=int,
-        default=0,
-    )
+        cmd.add_argument(
+            "-l",
+            "--limit",
+            help="Set a limit for job entries to generate (defaults to 0, no limit)",
+            type=int,
+            default=0,
+        )
 
-    # recommended: ghcr.io/buildsi/spack-ubuntu-20.04
-    matrix.add_argument(
-        "-c",
-        "--container",
-        help="container base to use.",
-    )
+        # recommended: ghcr.io/buildsi/spack-ubuntu-20.04
+        cmd.add_argument(
+            "-c",
+            "--container",
+            help="container base to use.",
+        )
 
-    # Generate the matrix from a config
-    matrix.add_argument(
-        "config_yaml",
-        help="A configuration file to run a splice prediction.",
-    )
+        # Generate the matrix from a config
+        cmd.add_argument(
+            "config_yaml",
+            help="A configuration file to run a splice prediction.",
+        )
 
-    for command in [matrix, splice]:
-        command.add_argument(
+    for subparser in [command, matrix, splice]:
+        subparser.add_argument(
             "-o",
             "--outfile",
             help="write json output to this file",
@@ -202,7 +209,9 @@ def run_spliced():
     if args.command == "splice":
         from .splice import main
     if args.command == "matrix":
-        from .matrix import main
+        from .command import matrix as main
+    if args.command == "command":
+        from .command import command as main
 
     # Pass on to the correct parser
     return_code = 0

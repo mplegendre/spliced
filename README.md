@@ -25,6 +25,79 @@ $ source spack/share/spack/setup-env.sh
  
 ## Usage
 
+### Install
+
+You can clone and then install the library locally:
+
+```bash
+$ git clone https://github.com/buildsi/spliced
+$ cd spliced
+$ python -m venv env
+$ source env/bin/activate
+$ pip install -e .
+```
+
+or for releases:
+
+```bash
+$ pip install spliced
+```
+
+### Config File
+
+A spliced config file is going to help you generate splicing commands, either to run yourself locally or to hand
+of to an automated solution. It's a simple YAML file that should have the following:
+
+```yaml
+package: curl
+splice: zlib
+command: curl --head https://linuxize.com/
+```
+
+It's currently a flat list because we have one of each, and this can be adjusted as needed.
+Each of these is considered one experiment. You should not include versions with the package
+to be spliced, or the library to splice in, as they will be discovered programatically.
+The above says:
+
+> Take the binary 'curl' for the package curl, and replace the chosen version of zlib with all other versions of zlib.
+
+You can also ask to splice in a totally different dependency:
+
+```yaml
+package: hdf5
+splice: openmpi
+replace: mpich
+...
+```
+
+The above says
+
+> Take the hdf5 package, and replace openmpi with mpich.
+
+When you don't include a "replace" field, the replacement library is implied to be the same as the spliced one.
+To then run the workflow, simply input "curl.yaml" as the splice variable in the GitHub
+workflow interface. If you don't include a command, then the splice and prediction can still happen,
+but we don't have a good way to test if the binary still (minimally) runs.
+
+
+### Splice Commands
+
+Thus the first thing we might want to do is take a config YAML file, and see all the commands it can generate
+for us.
+
+```bash
+$ spliced command examples/curl.yaml
+spliced splice --package curl@7.74.0 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/
+spliced splice --package curl@7.68.0 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/
+...
+spliced splice --package curl@7.72.0 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/
+spliced splice --package curl@7.49.1 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/
+```
+
+It looks exactly as you'd expect - every version of curl with instruction to splice zlib (meaning different versions) and a command (the last part of the line)
+to test. Given the expeiment runner is spack, spack will receive this request and handle install, etc. We could then try running one of those commands, discussed
+next.
+
 ### Splice
 
 The most basic functionality is to perform a splice! You can either [generate a matrix](#splice-matrix) via a config file, 
@@ -70,10 +143,11 @@ any predictor dependency is missing, a warning will be printed and it will be sk
 to a specific number of predictors, use `--predictor` for each.
 
 ```bash
-$ spliced splice --package curl@7.50.2 --splice zlib --experiment curl --predictor actual --predictor symbolator
+$ spliced splice --package curl@7.50.2 --splice zlib --experiment curl --predictor symbolator
 ```
 
-The above would run symbolator and an actual run (given a command) only. Here is what an entire run looks like, with a testing command and 
+Note that the "actual" run is always performed if a command is provided, but not if it isn't.
+The above would run the experiment with a symbolator prediction. Here is what an entire run looks like, with a testing command and 
 output saved to a json file with `--outfile`
 
 ```bash
@@ -100,7 +174,6 @@ Testing splicing in (and out) zlib@1.2.3
 Making predictions for actual
 Making predictions for symbolator
 ```
-
 
 ### Splice Matrix
 
@@ -147,7 +220,43 @@ $ spliced matrix examples/curl.yaml --outfile examples/curl-matrix.json
 
 ## Development
 
-### 1. Creating a container base
+### 1. An Experiment
+
+The core of an experiment is to be able to run the initial steps for a splice,
+and return the splice object, which should have binaries and libraries for a spec pre and post splice,
+along with other metadata. This general format allows us to have an experiment runner like spack
+(that will install what we need and then set the paths) or eventually a manual runner (where we can just
+set them arbitrarily to our liking).
+
+### 2. A Predictor
+
+A predictor should be added as a module to [spliced/predict](spliced/predict) so it is retrieved
+on init. It should have a main function, predict, which takes a splice object and optional kwargs.
+At this point you can iterate through the splice structure to use whatever metadata you need. E.g.,:
+
+ - splice.libs: is a dictionary with "original" and "spliced" for original and spliced libs, respectively
+ - splice.binaries: is the same structure, but with binaries for the original and spliced package
+ 
+Importantly, your predictor should set `spliced.predictions[<name_of_predictor>]` to be a list of dictionaries,
+where you can put any needed metadata. The binary/lib is suggested, along with a return code or message from the console,
+and *importantly* you should have a boolean true/false for "prediction" about whether the splice is predicted to work.
+Here is an example list of results (with a single splice prediction using abicompat) from libaibgail.
+
+```
+"predictions": {
+    "libabigail": [
+        {
+            "message": "",
+            "return_code": 0,
+            "binary": "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-7ybfviq4uauvq4hhggxn3npc6ib4clr3/bin/curl",
+            "lib": "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px/lib/libz.so.1.2.11",
+            "original_lib": "/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px/lib/libz.so.1.2.11",
+            "prediction": true
+        }
+    ],
+```
+
+### 3. Creating a container base
 
 Typically, a container base should have the dependencies that you need to run your
 splice. E.g., if you want to use the libabigial splicer, libabigail should

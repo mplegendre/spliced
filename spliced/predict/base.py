@@ -35,12 +35,20 @@ class Actual(Prediction):
         # Check each binary to match the command
         executable = shlex.split(splice.command)[0]
         results = []
-        for binary in splice.binaries:
-            if binary.endswith(executable):
-                cmd = "%s%s%s" % (os.path.dirname(binary), os.path.sep, splice.command)
-                res = utils.run_command(cmd)
-                res["prediction"] = True if res["return_code"] == 0 else False
-                res["command"] = cmd
-                results.append(res)
+
+        # Binaries will have "original" and then "spliced"
+        for binary_type, binaries in splice.binaries.items():
+            for binary in binaries:
+                if binary.endswith(executable):
+                    cmd = "%s%s%s" % (
+                        os.path.dirname(binary),
+                        os.path.sep,
+                        splice.command,
+                    )
+                    res = utils.run_command(cmd)
+                    res["prediction"] = True if res["return_code"] == 0 else False
+                    res["command"] = cmd
+                    res["binary_type"] = binary_type
+                    results.append(res)
 
         splice.predictions["actual"] = results
