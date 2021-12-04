@@ -64,7 +64,7 @@ RUN git clone -b vsoch/db-17 https://github.com/vsoch/spack /opt/spack && \
     cd /opt/spack && \
     . share/spack/setup-env.sh && \
     spack compiler find && \
-    spack install libabigail target=x86_64_v4
+    spack install libabigail
 
 RUN git clone https://github.com/buildsi/symbolator && \
     cd symbolator && \
