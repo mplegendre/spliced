@@ -36,7 +36,6 @@ class SymbolatorPrediction(Prediction):
                         corpora[lib] = get_corpus(lib)
 
                     # Make the splice prediction with symbolator
-                    # TODO this structure seems all wrong...
                     sym_result = run_symbols_splice(corpora[binary], corpora[lib])
                     predictions[binary][lib] = (
                         True if not sym_result["missing"] else False
