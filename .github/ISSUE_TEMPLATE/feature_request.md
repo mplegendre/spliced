@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Request a feature for Singularity Registry HPC Client
+about: Request a feature
 
 ---
 

@@ -1,9 +1,5 @@
 # Contributor's Agreement
 
-This code is licensed under the MPL 2.0 [LICENSE](LICENSE).
-
-# Contributing
-
 When contributing to Singularity Registry Global Client, it is 
 important to properly communicate the gist of the contribution. 
 If it is a simple code or editorial fix, simply explaining this 
