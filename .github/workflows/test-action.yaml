@@ -1,0 +1,35 @@
+name: Test Spliced Action
+on:
+  pull_request: []
+ 
+jobs:
+  install-spliced:
+    runs-on: ubuntu-latest
+    name: Install Spliced
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Spliced
+        uses: ./action/install
+
+  generate-matrix:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    name: Generate Spliced Matrix
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Spliced
+        run: pip install -e .
+      - name: Generate Matrix
+        uses: ./action/matrix
+        id: matrix
+        with:
+          yaml: ./examples/curl.yaml
+
+      - name: Show result
+        env:
+           matrix: ${{ steps.matrix.outputs.matrix }}
+        run: |
+           printf "${{ env.matrix }}\n"
