@@ -13,7 +13,7 @@ jobs:
           ref: "gh-pages"
 
       - name: Create conda environment
-        run: conda create --quiet -c conda-forge --name spliced spython
+        run: conda create --quiet -c conda-forge --name spliced pyyaml
 
       - name: Generate Docs
         run: |
