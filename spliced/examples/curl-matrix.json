@@ -1,0 +1,234 @@
+[
+    {
+        "command": "spliced splice --package curl@7.42.1 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.42.1",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.76.1 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.76.1",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.54.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.54.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.45.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.45.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.79.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.79.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.59.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.59.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.75.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.75.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.49.1 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.49.1",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.53.1 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.53.1",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.77.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.77.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.50.2 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.50.2",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.47.1 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.47.1",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.43.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.43.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.56.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.56.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.78.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.78.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.46.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.46.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.73.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.73.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.76.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.76.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.44.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.44.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.74.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.74.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.68.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.68.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.63.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.63.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.50.1 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.50.1",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.60.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.60.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.50.3 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.50.3",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.72.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.72.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.64.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.64.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.71.0 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.71.0",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    },
+    {
+        "command": "spliced splice --package curl@7.52.1 --splice zlib --replace zlib --experiment curl",
+        "package": "curl@7.52.1",
+        "splice": "zlib",
+        "replace": "zlib",
+        "experiment": "curl",
+        "container": null
+    }
+]

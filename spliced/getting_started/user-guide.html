@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Guide &mdash; Singularity Registry (HPC) 0.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developer Guide" href="developer-guide.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Singularity Registry (HPC)
+          </a>
+              <div class="version">
+                0.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-spliced">Why spliced?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-experiments-are-available">What experiments are available?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-predictors-are-available">What predictors are available?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#config-file">Config File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spliced-commands">Spliced Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command">Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#splice">Splice</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#spack-splice">Spack Splice</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#matrix">Matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#github-actions">GitHub Actions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer-guide.html">Developer Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/spliced.html">Spliced API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Singularity Registry (HPC)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Getting Started</a> &raquo;</li>
+      <li>User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/getting_started/user-guide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="user-guide">
+<span id="getting-started-user-guide"></span><h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+<div class="section" id="why-spliced">
+<h2>Why spliced?<a class="headerlink" href="#why-spliced" title="Permalink to this headline"></a></h2>
+<p>Spliced will allow you to run splice experiments using various predictor.
+Let’s review some terminology first.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>predictor</strong>: is a tool that can take some set of binaries or libraries, and say “I think if you use A with B, it will work.”</li>
+<li><strong>experiment</strong>: an experiment is a set of steps you can do to perform a splice. For example, running a splice experiment with spack means you provide libraries to spack, and it splices them.</li>
+<li><strong>splice</strong>: We typically call the library we want to “cut out” the splice.</li>
+<li><strong>replace</strong> We typically call the library we want to replace the splice with (or “splice in” if you prefer) the replacement library.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="what-experiments-are-available">
+<h2>What experiments are available?<a class="headerlink" href="#what-experiments-are-available" title="Permalink to this headline"></a></h2>
+<p>Currently, our main experiment runner is <a class="reference external" href="https://github.com/spack/spack">spack</a> and we are installing from a fork and branch
+under vsoch to get extra functionality that may (or may not) eventually be integrated. We also plan to add a manual experiment - e.g.,
+instead of asking spack to figure out how a package and dependencies work together, just shove two at each other and force it.
+We haven’t developed this use case yet.</p>
+</div>
+<div class="section" id="what-predictors-are-available">
+<h2>What predictors are available?<a class="headerlink" href="#what-predictors-are-available" title="Permalink to this headline"></a></h2>
+<p>As stated above, a <strong>predictor</strong> is a tool that can take some set of binaries or libraries, and say “I think if you use A with B, it will work.”
+spliced currently has the following predictors:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>actual</strong>: This is a base level of predictor, which (given that you provide a testing command) will simply test a binary, as is, and tell you if it works. This is our “ground truth” for the other predictors that aren’t actually testing anything, but just predicting.</li>
+<li><strong>libabigail</strong>: is a <a class="reference external" href="https://sourceware.org/libabigail/">library provided by RedHat</a> that provides tooling for assessing ABI compatibility.</li>
+<li><strong>symbolator</strong>: is a <a class="reference external" href="https://github.com/buildsi/symbolator">simple library developed by the group here</a> that makes predictions based on comparing symbol sets.</li>
+<li><strong>smeagle</strong>: is <a class="reference external" href="https://github.com/buildsi/Smeagle">another library being developed here</a> that is not added yet, but will be eventually.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="config-file">
+<h2>Config File<a class="headerlink" href="#config-file" title="Permalink to this headline"></a></h2>
+<p>Great, so let’s get started! A splice experiment starts with a config file, a YAML file
+to help you generate splicing commands, either to run yourself locally or to hand
+of to an automated solution. It’s a simple YAML file that should minimally have the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">curl</span>
+<span class="nt">splice</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">zlib</span>
+<span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">curl --head https://linuxize.com/</span>
+</pre></div>
+</div>
+<p>It’s currently a flat list because we have one of each, and this can be adjusted as needed.
+Each of these is considered one experiment. You should not include versions with the package
+to be spliced, or the library to splice in, as they will be discovered programatically.
+The above says:</p>
+<div class="line-block">
+<div class="line">Take the binary ‘curl’ for the package curl, and replace the chosen version of zlib with all other versions of zlib.</div>
+</div>
+<p>You can also ask to splice in a totally different dependency:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hdf5</span>
+<span class="nt">splice</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">openmpi</span>
+<span class="nt">replace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mpich</span>
+</pre></div>
+</div>
+<p>The above says</p>
+<div class="line-block">
+<div class="line">Take the hdf5 package, and replace openmpi with mpich.</div>
+</div>
+<p>When you don’t include a “replace” field, the replacement library is implied to be the same as the spliced one.
+To then run the workflow, simply input “curl.yaml” as the splice variable in the GitHub
+workflow interface. If you don’t include a command, then the splice and prediction can still happen,
+but we don’t have a good way to test if the binary still (minimally) runs.</p>
+</div>
+<div class="section" id="spliced-commands">
+<h2>Spliced Commands<a class="headerlink" href="#spliced-commands" title="Permalink to this headline"></a></h2>
+<p>Spliced provides the following commands via the <code class="docutils literal notranslate"><span class="pre">spliced</span></code> command line client.</p>
+<div class="section" id="command">
+<h3>Command<a class="headerlink" href="#command" title="Permalink to this headline"></a></h3>
+<p>Thus the first thing we might want to do is take a config YAML file, and see all the commands it can generate
+for us.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced <span class="nb">command</span> examples/curl.yaml
+<span class="go">spliced splice --package curl@7.74.0 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/</span>
+<span class="go">spliced splice --package curl@7.68.0 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/</span>
+<span class="go">...</span>
+<span class="go">spliced splice --package curl@7.72.0 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/</span>
+<span class="go">spliced splice --package curl@7.49.1 --splice zlib --runner spack --replace zlib --experiment curl curl --head https://linuxize.com/</span>
+</pre></div>
+</div>
+<p>It looks exactly as you’d expect - every version of curl with instruction to splice zlib (meaning different versions) and a command (the last part of the line)
+to test. Given the expeiment runner is spack, spack will receive this request and handle install, etc. We could then try running one of those commands, discussed
+next.</p>
+</div>
+<div class="section" id="splice">
+<h3>Splice<a class="headerlink" href="#splice" title="Permalink to this headline"></a></h3>
+<p>The most basic functionality is to perform a splice! You can either [generate a matrix](#splice-matrix) via a config file,
+provide the same config file to splice (appropriate for runners with custom variables to include like library paths)
+or come up with your own.  Current runners supported include:</p>
+<blockquote>
+<div><ul class="simple">
+<li>spack</li>
+</ul>
+</div></blockquote>
+<p>And likely we will add a “manual” runner soon.</p>
+<div class="section" id="spack-splice">
+<h4>Spack Splice<a class="headerlink" href="#spack-splice" title="Permalink to this headline"></a></h4>
+<p>Let’s start with an example command that says:</p>
+<div class="line-block">
+<div class="line">splice all versions of zlib to replace the current version of zlib in curl</div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced splice --package curl@7.50.2 --splice zlib --runner spack --replace zlib --experiment curl
+</pre></div>
+</div>
+<p>Since we only have one runner (spack) that’s currently the default, so this works too:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced splice --package curl@7.50.2 --splice zlib --replace zlib --experiment curl
+</pre></div>
+</div>
+<p>Also if you are splicing the same library in (e.g., different versions) you can leave out replace:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced splice --package curl@7.50.2 --splice zlib --experiment curl
+</pre></div>
+</div>
+<p>The experiment is just a named identifier, for your use (to store with the results). When you do this
+you’ll see:</p>
+<ol class="arabic simple">
+<li>Concretizing <a class="reference external" href="mailto:curl&#37;&#52;&#48;7&#46;50&#46;2">curl<span>&#64;</span>7<span>&#46;</span>50<span>&#46;</span>2</a>: the main package concretizing and installing. If either of these steps fails, you’ll get a result object reporting the error.</li>
+<li>Splicing (for each version of the dependency found) this can also have various points of failure, which are logged.</li>
+<li>Running splice predictors (not developed yet) but will give a prediction if the splice will work!</li>
+<li>Commands, if provided, are then run to give an “actual” report of if it worked (according to the command) or not.</li>
+</ol>
+<p>By default, the predictors used will be all that are provided (libabigail and symbolator and an actual) and if
+any predictor dependency is missing, a warning will be printed and it will be skipped. If you want to filter
+to a specific number of predictors, use <cite>–predictor</cite> for each.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced splice --package curl@7.50.2 --splice zlib --experiment curl --predictor symbolator
+</pre></div>
+</div>
+<p>Note that the “actual” run is always performed if a command is provided, but not if it isn’t.
+The above would run the experiment with a symbolator prediction. Here is what an entire run looks like, with a testing command and
+output saved to a json file with <cite>–outfile</cite></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced splice --package curl@7.50.2 --splice zlib --runner spack --replace zlib --experiment curl --outfile examples/curl-result.json curl --head https://linuxize.com/
+<span class="go">Concretizing curl@7.50.2</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/berkeley-db-18.1.40-pdlzkb4o4qsw3nglppv7eqjm7lepqvod</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/libiconv-1.16-infpf4xwcb7253odbry6ljjcsat2ksp5</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/pkgconf-1.8.0-5bckkoeicca3dtolbeyz6tnnyxwcsfn5</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/diffutils-3.8-ae4ve7adrxntd2kafm4xxmeyhrwpzpmg</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/ncurses-6.2-5bzr63iqgpogufanleaw2fzjxnzziz67</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/bzip2-1.0.8-doeyikigv6jk4dk6fdxm3cl5j7j465if</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/readline-8.1-wkga37hicua476jm2bjjmuzufz6h574j</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/gdbm-1.19-wuhyaf477mw6nmgftp3gvrxic7qzgpso</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/perl-5.34.0-bvgnm2ejnajpvaruta22d5c24g6qi4zu</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/openssl-1.1.1l-antishvjbtniecep64dku2cenh7hkonc</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-a7ncgyeci2upn3vimpc62whvdkagihou</span>
+<span class="go">Testing splicing in (and out) zlib@1.2.11</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px</span>
+<span class="go">Testing splicing in (and out) zlib@1.2.8</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.8-mtdthhgpvdcqsfmbqzzvdlvain56j6th</span>
+<span class="go">Testing splicing in (and out) zlib@1.2.3</span>
+<span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.3-mum2pz5di4xf4pjkyac3olgpnbrtpxph</span>
+<span class="go">Making predictions for actual</span>
+<span class="go">Making predictions for symbolator</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix">
+<h3>Matrix<a class="headerlink" href="#matrix" title="Permalink to this headline"></a></h3>
+<p>While you can perform a single splice manually, generally you’d want to instead create a matrix!
+You can do this with the <cite>splice matrix</cite> command, which will output json that you can use in GitHub or other CI workflows.
+The spliced format</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced matrix examples/curl.yaml
+</pre></div>
+</div>
+<p>If you provide a custom container base, it will be included in the matrix and compilers discovered from it:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced matrix examples/curl.yaml --container ghcr.io/buildsi/spack-ubuntu-20.04
+</pre></div>
+</div>
+<p>This will output a matrix of commands and other metadata that you can use in GitHub actions or your CI tool of choice.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced matrix examples/sqlite.yaml
+<span class="go">::set-output name=containers::[{&quot;command&quot;: &quot;spliced splice --package sqlite@3.27.0 --splice zlib --replace zlib --experiment sqlite&quot;, &quot;package&quot;: &quot;sqlite@3.27.0&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;sqlite&quot;, &quot;container&quot;: null}, {&quot;command&quot;: &quot;spliced splice --package sqlite@3.28.0 --splice zlib --replace zlib --experiment sqlite&quot;, &quot;package&quot;: &quot;sqlite@3.28.0&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;sqlite&quot;, &quot;container&quot;: null}, {&quot;command&quot;: &quot;spliced splice --package sqlite@3.29.0 --splice zlib --replace zlib --experiment sqlite&quot;, &quot;package&quot;: &quot;sqlite@3.29.0&quot;,</span>
+<span class="go">...</span>
+<span class="go">&quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;sqlite&quot;, &quot;container&quot;: null}, {&quot;command&quot;: &quot;spliced splice --package sqlite@3.30.0 --splice zlib --replace zlib --experiment sqlite&quot;, &quot;package&quot;: &quot;sqlite@3.30.0&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;sqlite&quot;, &quot;container&quot;: null}, {&quot;command&quot;: &quot;spliced splice --package sqlite@3.27.2 --splice zlib --replace zlib --experiment sqlite&quot;, &quot;package&quot;: &quot;sqlite@3.27.2&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;sqlite&quot;, &quot;container&quot;: null}, {&quot;command&quot;: &quot;spliced splice --package sqlite@3.35.5 --splice zlib --replace zlib --experiment sqlite&quot;, &quot;package&quot;: &quot;sqlite@3.35.5&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;sqlite&quot;, &quot;container&quot;: null}]</span>
+</pre></div>
+</div>
+<p>If you want to limit the number of results (if versions exceed this it will randomly sample to the limit):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span><span class="m">256</span> is the job limit <span class="k">for</span> GitHub actions
+<span class="gp">$ </span>spliced matrix examples/curl.yaml --limit <span class="m">256</span>
+
+<span class="gp"># </span>An example to show much fewier
+<span class="gp">$ </span>spliced matrix examples/curl.yaml --limit <span class="m">3</span>
+<span class="go">Warning: original output is length 29 and limit is set to 3 jobs!</span>
+<span class="go">::set-output name=containers::[{&quot;command&quot;: &quot;spliced splice --package curl@7.71.0 --splice zlib --replace zlib --experiment curl&quot;, &quot;package&quot;: &quot;curl@7.71.0&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;curl&quot;, &quot;container&quot;: null}, {&quot;command&quot;: &quot;spliced splice --package curl@7.49.1 --splice zlib --replace zlib --experiment curl&quot;, &quot;package&quot;: &quot;curl@7.49.1&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;curl&quot;, &quot;container&quot;: null}, {&quot;command&quot;: &quot;spliced splice --package curl@7.59.0 --splice zlib --replace zlib --experiment curl&quot;, &quot;package&quot;: &quot;curl@7.59.0&quot;, &quot;splice&quot;: &quot;zlib&quot;, &quot;replace&quot;: &quot;zlib&quot;, &quot;experiment&quot;: &quot;curl&quot;, &quot;container&quot;: null}]</span>
+</pre></div>
+</div>
+<p>Finally, you can save the result directly to output file (json) instead:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced matrix examples/curl.yaml --outfile examples/curl-matrix.json
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="github-actions">
+<h2>GitHub Actions<a class="headerlink" href="#github-actions" title="Permalink to this headline"></a></h2>
+<p>Spliced provides a set of GitHub actions that make it easy to run splice experiments on GitHub.
+The current documentation for these is in the <code class="docutils literal notranslate"><span class="pre">.github/workflows/test-action.yaml</span></code> file, and we will
+add more detail here when the action development is finished.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="developer-guide.html" class="btn btn-neutral float-right" title="Developer Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

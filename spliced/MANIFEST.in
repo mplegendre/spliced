@@ -1,0 +1,12 @@
+include README.md LICENSE
+recursive-include spliced *.png
+recursive-include spliced *.sh
+recursive-include spliced *
+recursive-include * *.png
+prune env*
+global-exclude .env
+global-exclude *.py[co]
+recursive-exclude .git *
+global-exclude *.img
+global-exclude __pycache__
+prune docs*

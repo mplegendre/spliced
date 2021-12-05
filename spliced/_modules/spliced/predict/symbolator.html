@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>spliced.predict.symbolator &mdash; Singularity Registry (HPC) 0.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Singularity Registry (HPC)
+          </a>
+              <div class="version">
+                0.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/developer-guide.html">Developer Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/spliced.html">Spliced API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Singularity Registry (HPC)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+          <li><a href="../predict.html">spliced.predict</a> &raquo;</li>
+      <li>spliced.predict.symbolator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for spliced.predict.symbolator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2013-2021 Lawrence Livermore National Security, LLC and other</span>
+<span class="c1"># Spack Project Developers. See the top-level COPYRIGHT file for details.</span>
+<span class="c1">#</span>
+<span class="c1"># SPDX-License-Identifier: (Apache-2.0 OR MIT)</span>
+
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Prediction</span>
+<span class="kn">from</span> <span class="nn">spliced.logger</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">symbolator.asp</span> <span class="kn">import</span> <span class="n">PyclingoDriver</span><span class="p">,</span> <span class="n">ABIGlobalSolverSetup</span><span class="p">,</span> <span class="n">ABICompatSolverSetup</span>
+<span class="kn">from</span> <span class="nn">symbolator.facts</span> <span class="kn">import</span> <span class="n">get_facts</span>
+<span class="kn">from</span> <span class="nn">symbolator.corpus</span> <span class="kn">import</span> <span class="n">JsonCorpusLoader</span><span class="p">,</span> <span class="n">Corpus</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+
+<div class="viewcode-block" id="SymbolatorPrediction"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.symbolator.SymbolatorPrediction">[docs]</a><span class="k">class</span> <span class="nc">SymbolatorPrediction</span><span class="p">(</span><span class="n">Prediction</span><span class="p">):</span>
+<div class="viewcode-block" id="SymbolatorPrediction.predict"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.symbolator.SymbolatorPrediction.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">splice</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run symbolator to add to the predictions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># A corpora cache to not derive again if we already have</span>
+        <span class="n">corpora</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Create a set of predictions for each spliced binary / lib combination</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">binary</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">binaries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spliced&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+
+            <span class="c1"># Cache the corpora if we don&#39;t have it yet</span>
+            <span class="k">if</span> <span class="n">binary</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">corpora</span><span class="p">:</span>
+                <span class="n">corpora</span><span class="p">[</span><span class="n">binary</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_corpus</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">libset</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spliced&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+                <span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">libset</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]:</span>
+
+                    <span class="c1"># Also cache the lib if we don&#39;t have it yet</span>
+                    <span class="k">if</span> <span class="n">lib</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">corpora</span><span class="p">:</span>
+                        <span class="n">corpora</span><span class="p">[</span><span class="n">lib</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_corpus</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span>
+
+                    <span class="c1"># Make the splice prediction with symbolator</span>
+                    <span class="n">sym_result</span> <span class="o">=</span> <span class="n">run_symbols_splice</span><span class="p">(</span><span class="n">corpora</span><span class="p">[</span><span class="n">binary</span><span class="p">],</span> <span class="n">corpora</span><span class="p">[</span><span class="n">lib</span><span class="p">])</span>
+                    <span class="n">sym_result</span><span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary</span>
+                    <span class="n">sym_result</span><span class="p">[</span><span class="s2">&quot;lib&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lib</span>
+                    <span class="n">sym_result</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="kc">True</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">sym_result</span><span class="p">[</span><span class="s2">&quot;missing&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="kc">False</span>
+                    <span class="p">)</span>
+                    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sym_result</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">predictions</span><span class="p">:</span>
+            <span class="n">splice</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="s2">&quot;symbolator&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span></div></div>
+
+
+<div class="viewcode-block" id="run_symbol_solver"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.symbolator.run_symbol_solver">[docs]</a><span class="k">def</span> <span class="nf">run_symbol_solver</span><span class="p">(</span><span class="n">corpora</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A helper function to run the symbol solver.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">driver</span> <span class="o">=</span> <span class="n">PyclingoDriver</span><span class="p">()</span>
+    <span class="n">setup</span> <span class="o">=</span> <span class="n">ABIGlobalSolverSetup</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">driver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+        <span class="n">setup</span><span class="p">,</span>
+        <span class="n">corpora</span><span class="p">,</span>
+        <span class="n">dump</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">logic_programs</span><span class="o">=</span><span class="n">get_facts</span><span class="p">(</span><span class="s2">&quot;missing_symbols.lp&quot;</span><span class="p">),</span>
+        <span class="n">facts_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="c1"># Loading from json already includes system libs</span>
+        <span class="n">system_libs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_corpus"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.symbolator.get_corpus">[docs]</a><span class="k">def</span> <span class="nf">get_corpus</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a path, generate a corpus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">setup</span> <span class="o">=</span> <span class="n">ABICompatSolverSetup</span><span class="p">()</span>
+    <span class="n">corpus</span> <span class="o">=</span> <span class="n">Corpus</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">setup</span><span class="o">.</span><span class="n">get_json</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">system_libs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">globals_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="run_symbols_splice"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.symbolator.run_symbols_splice">[docs]</a><span class="k">def</span> <span class="nf">run_symbols_splice</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given two results, each a corpora with json values, perform a splice</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;missing&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Spliced libraries will be added as corpora here</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">JsonCorpusLoader</span><span class="p">()</span>
+    <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">corpora</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_lookup</span><span class="p">()</span>
+
+    <span class="c1"># original set of symbols without splice</span>
+    <span class="n">corpora_result</span> <span class="o">=</span> <span class="n">run_symbol_solver</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">corpora</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+    <span class="c1"># Now load the splices separately, and select what we need</span>
+    <span class="n">splice_loader</span> <span class="o">=</span> <span class="n">JsonCorpusLoader</span><span class="p">()</span>
+    <span class="n">splice_loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+    <span class="n">splices</span> <span class="o">=</span> <span class="n">splice_loader</span><span class="o">.</span><span class="n">get_lookup</span><span class="p">()</span>
+
+    <span class="c1"># If we have the library in corpora, delete it, add spliced libraries</span>
+    <span class="c1"># E.g., libz.so.1.2.8 is just &quot;libz&quot; and will be replaced by anything with the same prefix</span>
+    <span class="n">corpora_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">corp</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">corp</span> <span class="ow">in</span> <span class="n">corpora</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">splices_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">corp</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">corp</span> <span class="ow">in</span> <span class="n">splices</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="c1"># Keep a lookup of libraries names</span>
+    <span class="n">corpora_libnames</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">corpora</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">splices_libnames</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">splices</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="c1"># Splices selected</span>
+    <span class="n">selected</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Here we match based on the top level name, and add splices that match</span>
+    <span class="c1"># (this assumes that if a lib is part of a splice corpus set but not included, we don&#39;t add it)</span>
+    <span class="k">for</span> <span class="n">lib</span><span class="p">,</span> <span class="n">corp</span> <span class="ow">in</span> <span class="n">splices_lookup</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+        <span class="c1"># ONLY splice in those known</span>
+        <span class="k">if</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">corpora_lookup</span><span class="p">:</span>
+
+            <span class="c1"># Library A was spliced in place of Library B</span>
+            <span class="n">selected</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">splices_libnames</span><span class="p">[</span><span class="n">lib</span><span class="p">],</span> <span class="n">corpora_libnames</span><span class="p">[</span><span class="n">lib</span><span class="p">]])</span>
+            <span class="n">corpora_lookup</span><span class="p">[</span><span class="n">lib</span><span class="p">]</span> <span class="o">=</span> <span class="n">corp</span>
+
+    <span class="n">spliced_result</span> <span class="o">=</span> <span class="n">run_symbol_solver</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">corpora_lookup</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+    <span class="c1"># Compare sets of missing symbols</span>
+    <span class="n">result_missing</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">corpora_result</span><span class="o">.</span><span class="n">answers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;missing_symbols&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="p">]</span>
+    <span class="n">spliced_missing</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spliced_result</span><span class="o">.</span><span class="n">answers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;missing_symbols&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="p">]</span>
+
+    <span class="c1"># these are new missing symbols after the splice</span>
+    <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">spliced_missing</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result_missing</span><span class="p">]</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;missing&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing</span>
+    <span class="n">result</span><span class="p">[</span><span class="s2">&quot;selected&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">selected</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Guide &mdash; Singularity Registry (HPC) 0.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spliced API" href="../api_reference/spliced.html" />
+    <link rel="prev" title="User Guide" href="user-guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Singularity Registry (HPC)
+          </a>
+              <div class="version">
+                0.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#add-an-experiment">Add An Experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-a-predictor">Add A Predictor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-container-base">Creating a container base</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/spliced.html">Spliced API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/internal/modules.html">Internal API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Singularity Registry (HPC)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Getting Started</a> &raquo;</li>
+      <li>Developer Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/getting_started/developer-guide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="developer-guide">
+<span id="getting-started-developer-guide"></span><h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline"></a></h1>
+<p>This developer guide includes more complex interactions like adding experiments
+or using containers. If you haven’t read <a class="reference internal" href="installation.html#getting-started-installation"><span class="std std-ref">Installation</span></a>
+you should do that first.</p>
+<div class="section" id="add-an-experiment">
+<h2>Add An Experiment<a class="headerlink" href="#add-an-experiment" title="Permalink to this headline"></a></h2>
+<p>The core of an experiment is to be able to run the initial steps for a splice,
+and return the splice object, which should have binaries and libraries for a spec pre and post splice,
+along with other metadata. This general format allows us to have an experiment runner like spack
+(that will install what we need and then set the paths) or eventually a manual runner (where we can just
+set them arbitrarily to our liking).</p>
+</div>
+<div class="section" id="add-a-predictor">
+<h2>Add A Predictor<a class="headerlink" href="#add-a-predictor" title="Permalink to this headline"></a></h2>
+<p>A predictor should be added as a module to [spliced/predict](spliced/predict) so it is retrieved
+on init. It should have a main function, predict, which takes a splice object and optional kwargs.
+At this point you can iterate through the splice structure to use whatever metadata you need. E.g.,:</p>
+<blockquote>
+<div><ul class="simple">
+<li>splice.libs: is a dictionary with “original” and “spliced” for original and spliced libs, respectively</li>
+<li>splice.binaries: is the same structure, but with binaries for the original and spliced package</li>
+</ul>
+</div></blockquote>
+<p>Importantly, your predictor should set <cite>spliced.predictions[&lt;name_of_predictor&gt;]</cite> to be a list of dictionaries,
+where you can put any needed metadata. The binary/lib is suggested, along with a return code or message from the console,
+and <em>importantly</em> you should have a boolean true/false for “prediction” about whether the splice is predicted to work.
+Here is an example list of results (with a single splice prediction using abicompat) from libaibgail.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s2">&quot;libabigail&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;return_code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;binary&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/curl-7.50.2-7ybfviq4uauvq4hhggxn3npc6ib4clr3/bin/curl&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lib&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px/lib/libz.so.1.2.11&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;original_lib&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/zlib-1.2.11-3kmnsdv36qxm3slmcyrb326gkghsp6px/lib/libz.so.1.2.11&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;prediction&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">}</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>To be clear, the predictor must save a list of predictions to the splice.predicitions, keyed by the name, and the following fields are requried:</p>
+<blockquote>
+<div><ul class="simple">
+<li>binary</li>
+<li>lib</li>
+<li>prediction</li>
+</ul>
+</div></blockquote>
+<p>The following fields are not required but suggested:</p>
+<blockquote>
+<div><ul class="simple">
+<li>message (the terminal output of running the predictor)</li>
+<li>return_code</li>
+<li>original_lib or original_binary if relevant for the command</li>
+<li>any other relevant results information</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="creating-a-container-base">
+<h2>Creating a container base<a class="headerlink" href="#creating-a-container-base" title="Permalink to this headline"></a></h2>
+<p>Typically, a container base should have the dependencies that you need to run your
+splice. E.g., if you want to use the libabigial splicer, libabigail should
+be installed. We provide a set of automated builds for containers to provide the software
+needed [here](docker) (e.g., including libabigail, spack, and symbolator) so you can use this container set,
+or if you choose, bootstrap these containers for your own customization. Note that for these containers:</p>
+<blockquote>
+<div><ul class="simple">
+<li>we provide several os bases - the default of the spliced execuable is ubuntu 20.04, and you can change this with <cite>–container</cite></li>
+<li>the containers are flagged with [spack labels](<a class="reference external" href="https://github.com/spack/label-schema">https://github.com/spack/label-schema</a>) for <cite>org.spack.compilers</cite> to be discovered by the tool. If you don’t provide labels, all compilers in the container will be used.</li>
+<li>it’s assumed you have software you need in the container, or use our container bases as testing CI bases and install there on the fly.</li>
+</ul>
+</div></blockquote>
+<p>If you want to use the default containers provided by spliced, you shouldn’t need to worry about this.
+If you have any questions, don’t hesitate to open an issue.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="user-guide.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api_reference/spliced.html" class="btn btn-neutral float-right" title="Spliced API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

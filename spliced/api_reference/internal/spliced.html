@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>spliced package &mdash; Singularity Registry (HPC) 0.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/sphinx-argparse.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Internal API" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Singularity Registry (HPC)
+          </a>
+              <div class="version">
+                0.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/developer-guide.html">Developer Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../spliced.html">Spliced API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Internal API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">spliced package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.client">spliced.client module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.logger">spliced.logger module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.schemas">spliced.schemas module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.experiment">spliced.experiment module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.experiment.base">spliced.experiment.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.experiment.spack">spliced.experiment.spack module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.predict">spliced.predict module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.predict.base">spliced.predict.base module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.predict.symbolator">spliced.predict.symbolator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.predict.libabigail">spliced.predict.libabigail module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-spliced.utils">spliced.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Singularity Registry (HPC)</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">Internal API</a> &raquo;</li>
+      <li>spliced package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/api_reference/internal/spliced.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="spliced-package">
+<h1>spliced package<a class="headerlink" href="#spliced-package" title="Permalink to this headline"></a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="module-spliced.client">
+<span id="spliced-client-module"></span><h2>spliced.client module<a class="headerlink" href="#module-spliced.client" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.client.get_parser">
+<code class="sig-prename descclassname"><span class="pre">spliced.client.</span></code><code class="sig-name descname"><span class="pre">get_parser</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/client.html#get_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.client.get_parser" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.client.run_spliced">
+<code class="sig-prename descclassname"><span class="pre">spliced.client.</span></code><code class="sig-name descname"><span class="pre">run_spliced</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/client.html#run_spliced"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.client.run_spliced" title="Permalink to this definition"></a></dt>
+<dd><p>run_spliced to perform a splice!</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-spliced.logger">
+<span id="spliced-logger-module"></span><h2>spliced.logger module<a class="headerlink" href="#module-spliced.logger" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.logger.</span></code><code class="sig-name descname"><span class="pre">ColorizingStreamHandler</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">nocolor=False</span></span></em>, <em><span class="n"><span class="pre">stream=&lt;_io.TextIOWrapper</span> <span class="pre">name='&lt;stderr&gt;'</span> <span class="pre">mode='w'</span> <span class="pre">encoding='utf-8'&gt;</span></span></em>, <em><span class="n"><span class="pre">use_threads=False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#ColorizingStreamHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.StreamHandler</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.BLACK">
+<code class="sig-name descname"><span class="pre">BLACK</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.BLACK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.BLUE">
+<code class="sig-name descname"><span class="pre">BLUE</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.BLUE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.BOLD_SEQ">
+<code class="sig-name descname"><span class="pre">BOLD_SEQ</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[1m'</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.BOLD_SEQ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.COLOR_SEQ">
+<code class="sig-name descname"><span class="pre">COLOR_SEQ</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[%dm'</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.COLOR_SEQ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.CYAN">
+<code class="sig-name descname"><span class="pre">CYAN</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.CYAN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.GREEN">
+<code class="sig-name descname"><span class="pre">GREEN</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.GREEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.MAGENTA">
+<code class="sig-name descname"><span class="pre">MAGENTA</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.MAGENTA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.RED">
+<code class="sig-name descname"><span class="pre">RED</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.RED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.RESET_SEQ">
+<code class="sig-name descname"><span class="pre">RESET_SEQ</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.RESET_SEQ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.WHITE">
+<code class="sig-name descname"><span class="pre">WHITE</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.WHITE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.YELLOW">
+<code class="sig-name descname"><span class="pre">YELLOW</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.YELLOW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.can_color_tty">
+<code class="sig-name descname"><span class="pre">can_color_tty</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#ColorizingStreamHandler.can_color_tty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.can_color_tty" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.colors">
+<code class="sig-name descname"><span class="pre">colors</span></code><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'CRITICAL':</span> <span class="pre">1,</span> <span class="pre">'DEBUG':</span> <span class="pre">4,</span> <span class="pre">'ERROR':</span> <span class="pre">1,</span> <span class="pre">'INFO':</span> <span class="pre">2,</span> <span class="pre">'WARNING':</span> <span class="pre">3}</span></em><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.colors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.decorate">
+<code class="sig-name descname"><span class="pre">decorate</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#ColorizingStreamHandler.decorate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.decorate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.emit">
+<code class="sig-name descname"><span class="pre">emit</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#ColorizingStreamHandler.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.emit" title="Permalink to this definition"></a></dt>
+<dd><p>Emit a record.</p>
+<p>If a formatter is specified, it is used to format the record.
+The record is then written to the stream with a trailing newline.  If
+exception information is present, it is formatted using
+traceback.print_exception and appended to the stream.  If the stream
+has an ‘encoding’ attribute, it is used to determine how to do the
+output to the stream.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spliced.logger.ColorizingStreamHandler.is_tty">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">is_tty</span></code><a class="headerlink" href="#spliced.logger.ColorizingStreamHandler.is_tty" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.logger.Logger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.logger.</span></code><code class="sig-name descname"><span class="pre">Logger</span></code><a class="reference internal" href="../../_modules/spliced/logger.html#Logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.cleanup">
+<code class="sig-name descname"><span class="pre">cleanup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.cleanup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.cleanup" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.debug">
+<code class="sig-name descname"><span class="pre">debug</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.debug"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.debug" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.error">
+<code class="sig-name descname"><span class="pre">error</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.exit">
+<code class="sig-name descname"><span class="pre">exit</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em>, <em><span class="n"><span class="pre">return_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.exit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.exit" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.handler">
+<code class="sig-name descname"><span class="pre">handler</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.handler" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.info">
+<code class="sig-name descname"><span class="pre">info</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.info" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.location">
+<code class="sig-name descname"><span class="pre">location</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.location" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.progress">
+<code class="sig-name descname"><span class="pre">progress</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">done</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">total</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.progress" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.set_level">
+<code class="sig-name descname"><span class="pre">set_level</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.set_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.set_level" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.set_stream_handler">
+<code class="sig-name descname"><span class="pre">set_stream_handler</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">stream_handler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.set_stream_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.set_stream_handler" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.shellcmd">
+<code class="sig-name descname"><span class="pre">shellcmd</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.shellcmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.shellcmd" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.text_handler">
+<code class="sig-name descname"><span class="pre">text_handler</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.text_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.text_handler" title="Permalink to this definition"></a></dt>
+<dd><p>The default snakemake log handler.
+Prints the output to the console.
+:param msg: the log message dictionary
+:type msg: dict</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.logger.Logger.warning">
+<code class="sig-name descname"><span class="pre">warning</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#Logger.warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.Logger.warning" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.logger.setup_logger">
+<code class="sig-prename descclassname"><span class="pre">spliced.logger.</span></code><code class="sig-name descname"><span class="pre">setup_logger</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">quiet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">printshellcmds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">nocolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">use_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">wms_monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/logger.html#setup_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.logger.setup_logger" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-spliced.schemas">
+<span id="spliced-schemas-module"></span><h2>spliced.schemas module<a class="headerlink" href="#module-spliced.schemas" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="module-spliced.experiment">
+<span id="spliced-experiment-module"></span><h2>spliced.experiment module<a class="headerlink" href="#module-spliced.experiment" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="module-spliced.experiment.base">
+<span id="spliced-experiment-base-module"></span><h2>spliced.experiment.base module<a class="headerlink" href="#module-spliced.experiment.base" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.experiment.base.</span></code><code class="sig-name descname"><span class="pre">Experiment</span></code><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A base Experiment holds information for a splice experiment!</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.add_splice">
+<code class="sig-name descname"><span class="pre">add_splice</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">result</span></span></em>, <em><span class="n"><span class="pre">success</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">splice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.add_splice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.add_splice" title="Permalink to this definition"></a></dt>
+<dd><p>Add a splice to the experiment</p>
+<p>A splice can either be successful (so it will have libs, binaries, etc)
+or it can represent a failed state (for any number of reasons)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.command">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">command</span></code><a class="headerlink" href="#spliced.experiment.base.Experiment.command" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.init">
+<code class="sig-name descname"><span class="pre">init</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">package</span></span></em>, <em><span class="n"><span class="pre">splice</span></span></em>, <em><span class="n"><span class="pre">experiment</span></span></em>, <em><span class="n"><span class="pre">command</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.init" title="Permalink to this definition"></a></dt>
+<dd><p>Init config variables directly</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.load">
+<code class="sig-name descname"><span class="pre">load</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">config_file</span></span></em>, <em><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.load" title="Permalink to this definition"></a></dt>
+<dd><p>Load a config from a yaml file</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#spliced.experiment.base.Experiment.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.package">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">package</span></code><a class="headerlink" href="#spliced.experiment.base.Experiment.package" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.predict">
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Given a single named predictor (or a list to skip) make predictions.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.replace">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">replace</span></code><a class="headerlink" href="#spliced.experiment.base.Experiment.replace" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.run">
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.run" title="Permalink to this definition"></a></dt>
+<dd><p>run the experiment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.run_parallel">
+<code class="sig-name descname"><span class="pre">run_parallel</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.run_parallel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.run_parallel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.splice">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">splice</span></code><a class="headerlink" href="#spliced.experiment.base.Experiment.splice" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.to_dict">
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Return a dictionary of results</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.to_json">
+<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.to_json" title="Permalink to this definition"></a></dt>
+<dd><p>Return a json dump of results</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.validate">
+<code class="sig-name descname"><span class="pre">validate</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.validate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.experiment.base.Splice">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.experiment.base.</span></code><code class="sig-name descname"><span class="pre">Splice</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">package</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">splice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">command</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">experiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">success</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Splice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Splice" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A Splice holds the metadata for a splice, and if successful (or possible)
+will hold a result. A default splice result is not successful</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Splice.match_libs">
+<code class="sig-name descname"><span class="pre">match_libs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Splice.match_libs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Splice.match_libs" title="Permalink to this definition"></a></dt>
+<dd><p>Try to match dependencies between spliced/original library for comparison</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Splice.to_dict">
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Splice.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Splice.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Return the result as a dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.base.Splice.to_json">
+<code class="sig-name descname"><span class="pre">to_json</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Splice.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Splice.to_json" title="Permalink to this definition"></a></dt>
+<dd><p>Return the result as json</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-spliced.experiment.spack">
+<span id="spliced-experiment-spack-module"></span><h2>spliced.experiment.spack module<a class="headerlink" href="#module-spliced.experiment.spack" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.experiment.spack.SpackExperiment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.experiment.spack.</span></code><code class="sig-name descname"><span class="pre">SpackExperiment</span></code><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#SpackExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.SpackExperiment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#spliced.experiment.base.Experiment" title="spliced.experiment.base.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">spliced.experiment.base.Experiment</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.spack.SpackExperiment.do_splice">
+<code class="sig-name descname"><span class="pre">do_splice</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">splice_name</span></span></em>, <em><span class="n"><span class="pre">spec_main</span></span></em>, <em><span class="n"><span class="pre">transitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#SpackExperiment.do_splice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.SpackExperiment.do_splice" title="Permalink to this definition"></a></dt>
+<dd><p>do the splice, the spliced spec goes into the main spec</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.experiment.spack.SpackExperiment.run">
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#SpackExperiment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.SpackExperiment.run" title="Permalink to this definition"></a></dt>
+<dd><p>Perform a splice with a SpecA (a specific spec with a binary),
+and SpecB (the high level spec that is a dependency that we can test
+across versions).</p>
+<p>Arguments:
+package (specA_name): the name of the main package we are splicing up
+splice (specB_name): the spec we are removing / switching out
+replace (specC_name): the spec we are splicing in (replacing with)</p>
+<p>For many cases, specB and specC might be the same, but not always.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.experiment.spack.add_contenders">
+<code class="sig-prename descclassname"><span class="pre">spliced.experiment.spack.</span></code><code class="sig-name descname"><span class="pre">add_contenders</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">spec</span></span></em>, <em><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lib'</span></span></em>, <em><span class="n"><span class="pre">match</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#add_contenders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.add_contenders" title="Permalink to this definition"></a></dt>
+<dd><p>Given a spec, find contender binaries and/or libs</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.experiment.spack.add_libraries">
+<code class="sig-prename descclassname"><span class="pre">spliced.experiment.spack.</span></code><code class="sig-name descname"><span class="pre">add_libraries</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">spec</span></span></em>, <em><span class="n"><span class="pre">library_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#add_libraries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.add_libraries" title="Permalink to this definition"></a></dt>
+<dd><p>Given a spliced spec, get a list of its libraries matching a name (e.g., a library
+that has been spliced in). E.g., if the spec is curl, we might look for zlib.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-spliced.predict">
+<span id="spliced-predict-module"></span><h2>spliced.predict module<a class="headerlink" href="#module-spliced.predict" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.predict.get_predictors">
+<code class="sig-prename descclassname"><span class="pre">spliced.predict.</span></code><code class="sig-name descname"><span class="pre">get_predictors</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict.html#get_predictors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.get_predictors" title="Permalink to this definition"></a></dt>
+<dd><p>Get a lookup of predictors for an experiment to run.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-spliced.predict.base">
+<span id="spliced-predict-base-module"></span><h2>spliced.predict.base module<a class="headerlink" href="#module-spliced.predict.base" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.predict.base.Actual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.predict.base.</span></code><code class="sig-name descname"><span class="pre">Actual</span></code><a class="reference internal" href="../../_modules/spliced/predict/base.html#Actual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.base.Actual" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#spliced.predict.base.Prediction" title="spliced.predict.base.Prediction"><code class="xref py py-class docutils literal notranslate"><span class="pre">spliced.predict.base.Prediction</span></code></a></p>
+<p>Given a splice result with a command, get an actual result.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.predict.base.Actual.predict">
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">splice</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/base.html#Actual.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.base.Actual.predict" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.predict.base.Prediction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.predict.base.</span></code><code class="sig-name descname"><span class="pre">Prediction</span></code><a class="reference internal" href="../../_modules/spliced/predict/base.html#Prediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.base.Prediction" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A prediction is a base for assessing a Splice and making predictions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.predict.base.Prediction.predict">
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">splice</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/base.html#Prediction.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.base.Prediction.predict" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-spliced.predict.symbolator">
+<span id="spliced-predict-symbolator-module"></span><h2>spliced.predict.symbolator module<a class="headerlink" href="#module-spliced.predict.symbolator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.predict.symbolator.SymbolatorPrediction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.predict.symbolator.</span></code><code class="sig-name descname"><span class="pre">SymbolatorPrediction</span></code><a class="reference internal" href="../../_modules/spliced/predict/symbolator.html#SymbolatorPrediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.symbolator.SymbolatorPrediction" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#spliced.predict.base.Prediction" title="spliced.predict.base.Prediction"><code class="xref py py-class docutils literal notranslate"><span class="pre">spliced.predict.base.Prediction</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.predict.symbolator.SymbolatorPrediction.predict">
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">splice</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/symbolator.html#SymbolatorPrediction.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.symbolator.SymbolatorPrediction.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Run symbolator to add to the predictions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.predict.symbolator.get_corpus">
+<code class="sig-prename descclassname"><span class="pre">spliced.predict.symbolator.</span></code><code class="sig-name descname"><span class="pre">get_corpus</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/symbolator.html#get_corpus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.symbolator.get_corpus" title="Permalink to this definition"></a></dt>
+<dd><p>Given a path, generate a corpus</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.predict.symbolator.run_symbol_solver">
+<code class="sig-prename descclassname"><span class="pre">spliced.predict.symbolator.</span></code><code class="sig-name descname"><span class="pre">run_symbol_solver</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">corpora</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/symbolator.html#run_symbol_solver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.symbolator.run_symbol_solver" title="Permalink to this definition"></a></dt>
+<dd><p>A helper function to run the symbol solver.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.predict.symbolator.run_symbols_splice">
+<code class="sig-prename descclassname"><span class="pre">spliced.predict.symbolator.</span></code><code class="sig-name descname"><span class="pre">run_symbols_splice</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">A</span></span></em>, <em><span class="n"><span class="pre">B</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/symbolator.html#run_symbols_splice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.symbolator.run_symbols_splice" title="Permalink to this definition"></a></dt>
+<dd><p>Given two results, each a corpora with json values, perform a splice</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-spliced.predict.libabigail">
+<span id="spliced-predict-libabigail-module"></span><h2>spliced.predict.libabigail module<a class="headerlink" href="#module-spliced.predict.libabigail" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="spliced.predict.libabigail.LibabigailPrediction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.predict.libabigail.</span></code><code class="sig-name descname"><span class="pre">LibabigailPrediction</span></code><a class="reference internal" href="../../_modules/spliced/predict/libabigail.html#LibabigailPrediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.libabigail.LibabigailPrediction" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#spliced.predict.base.Prediction" title="spliced.predict.base.Prediction"><code class="xref py py-class docutils literal notranslate"><span class="pre">spliced.predict.base.Prediction</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spliced.predict.libabigail.LibabigailPrediction.predict">
+<code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">splice</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/libabigail.html#LibabigailPrediction.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.libabigail.LibabigailPrediction.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Run libabigail to add to the predictions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="spliced.predict.libabigail.add_to_path">
+<code class="sig-prename descclassname"><span class="pre">spliced.predict.libabigail.</span></code><code class="sig-name descname"><span class="pre">add_to_path</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/predict/libabigail.html#add_to_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.predict.libabigail.add_to_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-spliced.utils">
+<span id="spliced-utils-module"></span><h2>spliced.utils module<a class="headerlink" href="#module-spliced.utils" title="Permalink to this headline"></a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Internal API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Vanessa Sochat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
