@@ -35,3 +35,5 @@ jobs:
            printf "${{ env.matrix }}\n"
       - name: Retrieve aritfacts
         uses: ./action/artifacts
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
