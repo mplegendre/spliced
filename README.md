@@ -6,8 +6,9 @@
 
 [![Test Spliced Action](https://github.com/buildsi/spliced/actions/workflows/test-action.yaml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/test-action.yaml)
 [![Build Ubuntu Bases](https://github.com/buildsi/spliced/actions/workflows/container-bases.yaml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/container-bases.yaml)
+[![Update Docs](https://github.com/buildsi/spliced/actions/workflows/docs.yml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/docs.yml)
 
-⭐️ [View Documentation](https://spliced.readthedocs.io/en/latest/) ⭐️ 
+⭐️ [View Documentation](https://buildsi.github.io/spliced/) ⭐️ 
 
 ## TODO
 
