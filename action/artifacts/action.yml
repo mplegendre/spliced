@@ -31,5 +31,6 @@ runs:
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_DAYS: ${{ inputs.days }}
         INPUT_OUTDIR: ${{ inputs.outdir }}
-      run: python ${{ github.action_path }}/scripts/get_artifacts.py 
+        ACTION_PATH: ${{ github.action_path }}
+      run: ${{ github.action_path }}/scripts/run.sh
       shell: bash
