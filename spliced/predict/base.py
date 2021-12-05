@@ -48,6 +48,7 @@ class Actual(Prediction):
                     res = utils.run_command(cmd)
                     res["prediction"] = True if res["return_code"] == 0 else False
                     res["command"] = cmd
+                    res["binary"] = binary
                     res["binary_type"] = binary_type
                     results.append(res)
 

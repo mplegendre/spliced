@@ -256,6 +256,19 @@ Here is an example list of results (with a single splice prediction using abicom
     ],
 ```
 
+To be clear, the predictor must save a list of predictions to the splice.predicitions, keyed by the name, and the following fields are requried:
+
+ - binary
+ - lib
+ - prediction
+ 
+The following fields are not required but suggested:
+
+ - message (the terminal output of running the predictor)
+ - return_code
+ - original_lib or original_binary if relevant for the command
+ - any other relevant results information
+
 ### 3. Creating a container base
 
 Typically, a container base should have the dependencies that you need to run your
@@ -270,6 +283,13 @@ or if you choose, bootstrap these containers for your own customization. Note th
  
 If you want to use the default containers provided by spliced, you shouldn't need to worry about this.
 If you have any questions, don't hesitate to open an issue.
+ 
+## TODO
+
+ - need pretty docs with branding
+ - GitHub action to generate splice result interface from splice repository with artifacts
+ - update spliced-results repo to use it
+ - then do release of spliced on pip
  
 ## License
 
