@@ -1,3 +1,0 @@
-package: python
-splice: zlib
-command: python tests/python-version.py

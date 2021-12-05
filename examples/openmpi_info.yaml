@@ -1,3 +1,0 @@
-package: openmpi
-splice: zlib
-command: ompi_info

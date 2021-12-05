@@ -1,3 +1,0 @@
-package: sqlite
-splice: zlib
-command: sqlite3 -version
