@@ -22,26 +22,29 @@ class SymbolatorPrediction(Prediction):
         corpora = {}
 
         # Create a set of predictions for each spliced binary / lib combination
-        predictions = {}
+        predictions = []
         for binary in splice.binaries.get("spliced", []):
 
-            if binary not in predictions:
-                predictions[binary] = {}
+            # Cache the corpora if we don't have it yet
             if binary not in corpora:
                 corpora[binary] = get_corpus(binary)
 
             for libset in splice.libs.get("spliced", []):
                 for lib in libset["paths"]:
+
+                    # Also cache the lib if we don't have it yet
                     if lib not in corpora:
                         corpora[lib] = get_corpus(lib)
 
                     # Make the splice prediction with symbolator
                     sym_result = run_symbols_splice(corpora[binary], corpora[lib])
-                    predictions[binary][lib] = (
+                    sym_result["binary"] = binary
+                    sym_result["lib"] = lib
+                    sym_result["prediction"] = (
                         True if not sym_result["missing"] else False
                     )
-            if not predictions[binary]:
-                del predictions[binary]
+                    predictions.append(sym_result)
+
         if predictions:
             splice.predictions["symbolator"] = predictions
 

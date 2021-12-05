@@ -33,3 +33,5 @@ jobs:
            matrix: ${{ steps.matrix.outputs.matrix }}
         run: |
            printf "${{ env.matrix }}\n"
+      - name: Retrieve aritfacts
+        uses: ./action/artifacts
