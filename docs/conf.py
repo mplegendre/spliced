@@ -58,7 +58,7 @@ source_suffix = [".rst", ".md"]
 master_doc = "index"
 
 # General information about the project.
-project = "Singularity Registry (HPC)"
+project = "Spliced"
 copyright = "2021, Vanessa Sochat"
 
 from spliced.version import __version__ as version
