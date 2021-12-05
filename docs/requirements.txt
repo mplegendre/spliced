@@ -1,3 +1,7 @@
+pyaml
+symbolator-python
+requests
+jsonschema
 sphinx
 sphinxcontrib-napoleon
 sphinx-argparse

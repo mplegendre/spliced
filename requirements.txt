@@ -1,4 +1,0 @@
-pyaml
-symbolator-python
-requests
-jsonschema
