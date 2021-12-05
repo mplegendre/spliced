@@ -122,7 +122,12 @@ today = datetime.now()
 
 
 # URLs
-REPO_URL = "%s/repos/%s" % (BASE, get_envar("INPUT_REPOSITORY"))
+repository = os.environ.get("INPUT_REPOSITORY") or os.environ.get("GITHUB_REPOSITORY")
+if not repository:
+    sys.exit("GITHUB_REPOSITORY is required!")
+print(repository)
+
+REPO_URL = "%s/repos/%s" % (BASE, repository)
 ARTIFACTS_URL = "%s/actions/artifacts" % REPO_URL
 
 # If we have a run ID in the environment, scope to that

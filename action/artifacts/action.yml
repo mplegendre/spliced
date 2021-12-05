@@ -2,8 +2,8 @@ name: "Spiced Matrix Artifact Retrieval"
 description: "Retrieve artifacts from a saved GitHub Actions run"
 inputs:
   repository:
-    description: repository where spliced was run and artifacts saved to
-    required: true
+    description: repository where spliced was run and artifacts saved to (defaults to running)
+    required: false
   days:
     description: number of days to check back (defaults to 2)
     required: true
@@ -28,6 +28,7 @@ runs:
     - name: Retrieve artifacts
       env:
         INPUT_REPOSITORY: ${{ inputs.repository }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_DAYS: ${{ inputs.days }}
         INPUT_OUTDIR: ${{ inputs.outdir }}
