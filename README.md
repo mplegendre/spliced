@@ -4,8 +4,11 @@
 
 🚧️ under development 🚧️
 
-[![GitHub actions status](https://github.com/buildsi/spliced/workflows/spliced/badge.svg?branch=main)](https://github.com/buildsi/spliced/actions?query=branch%3Amain+workflow%3Aspliced)
- 
+[![Test Spliced Action](https://github.com/buildsi/spliced/actions/workflows/test-action.yaml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/test-action.yaml)
+[![Build Ubuntu Bases](https://github.com/buildsi/spliced/actions/workflows/container-bases.yaml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/container-bases.yaml)
+
+⭐️ [View Documentation](https://spliced.readthedocs.io/en/latest/) ⭐️ 
+
 ## TODO
 
  - finish GitHub actions when we can test artifacts, add to docs
