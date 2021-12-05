@@ -24,6 +24,7 @@ runs:
   steps:
     - name: Install dependencies
       run: pip install requests
+      shell: bash
     - name: Retrieve artifacts
       env:
         INPUT_REPOSITORY: ${{ inputs.repository }}
