@@ -13,13 +13,13 @@ jobs:
           ref: "gh-pages"
 
       - name: Create conda environment
-        run: conda create --quiet -c conda-forge --name spliced pyyaml
+        run: python -m venv env
 
       - name: Generate Docs
         run: |
-          export PATH="/usr/share/miniconda/bin:$PATH"
+          source env/bin/activate
+          python --version
           root=$PWD
-          source activate spliced
           cd /tmp
           git clone https://github.com/buildsi/spliced
           cd spliced
