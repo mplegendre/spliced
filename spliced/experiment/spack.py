@@ -16,7 +16,6 @@ import time
 import subprocess
 
 try:
-    from spack.util.executable import which
     import spack.binary_distribution as bindist
     import spack.rewiring
     import spack.bootstrap
