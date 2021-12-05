@@ -32,6 +32,7 @@ jobs:
           rm -rf $root
           mv _build/html $root
           cd $root
+          touch .nojekyll
           ls
 
       - name: Deploy 🚀
