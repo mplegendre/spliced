@@ -1,0 +1,39 @@
+name: Update Docs
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: "gh-pages"
+
+      - name: Create conda environment
+        run: conda create --quiet -c conda-forge --name spliced spython
+
+      - name: Generate Docs
+        run: |
+          export PATH="/usr/share/miniconda/bin:$PATH"
+          root=$PWD
+          source activate spliced
+          cd /tmp
+          git clone https://github.com/buildsi/spliced
+          cd spliced
+          pip install -e .
+          cd docs
+          make html
+          rm -rf $root
+          mkdir -p $root
+          cp -R _build/html $root
+          cd $root
+          ls
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: .
