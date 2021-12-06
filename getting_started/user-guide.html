@@ -58,7 +58,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#matrix">Matrix</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#github-actions">GitHub Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#github-actions">GitHub Actions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#artifacts">Artifacts</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="developer-guide.html">Developer Guide</a></li>
@@ -291,6 +294,30 @@ The spliced format</p>
 <p>Spliced provides a set of GitHub actions that make it easy to run splice experiments on GitHub.
 The current documentation for these is in the <code class="docutils literal notranslate"><span class="pre">.github/workflows/test-action.yaml</span></code> file, and we will
 add more detail here when the action development is finished.</p>
+<div class="section" id="artifacts">
+<h3>Artifacts<a class="headerlink" href="#artifacts" title="Permalink to this headline"></a></h3>
+<p>The artifacts action will discover artifacts within some number of days, download them to a root (defaults to artifacts)
+in the following structure:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">artifacts</span>
+
+<span class="gp"># </span>experiment name
+<span class="go">└── curl</span>
+
+<span class="gp">    # </span>package name
+<span class="go">    └── curl</span>
+
+<span class="gp">        # </span>detail
+<span class="go">        ├── curl-7.49.1-splice-zlib-with-zlib-experiment-curl</span>
+<span class="go">        │   └── splices.json</span>
+<span class="go">        ├── curl-7.50.1-splice-zlib-with-zlib-experiment-curl</span>
+</pre></div>
+</div>
+<p>It is assumed that files under the same experiment belong together. In the example above,
+the experiment happens to be named similar to the package, but it doesn’t have to be the case.
+Since experiments are typically stored as yaml files in the same directory, you shouldn’t have issue
+managing this namespace unless you decide to redo an experiment with the same name. If you do this, you’ll
+need to manually delete the experiment folder if you want new results to be propogated.</p>
+</div>
 </div>
 </div>
 

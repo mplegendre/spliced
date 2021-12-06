@@ -246,3 +246,31 @@ Spliced provides a set of GitHub actions that make it easy to run splice experim
 The current documentation for these is in the ``.github/workflows/test-action.yaml`` file, and we will
 add more detail here when the action development is finished.
 
+
+Artifacts
+---------
+
+The artifacts action will discover artifacts within some number of days, download them to a root (defaults to artifacts)
+in the following structure:
+
+.. code-block:: console
+
+    artifacts
+    
+    # experiment name
+    └── curl
+
+        # package name
+        └── curl
+
+            # detail
+            ├── curl-7.49.1-splice-zlib-with-zlib-experiment-curl
+            │   └── splices.json
+            ├── curl-7.50.1-splice-zlib-with-zlib-experiment-curl
+
+
+It is assumed that files under the same experiment belong together. In the example above,
+the experiment happens to be named similar to the package, but it doesn't have to be the case.
+Since experiments are typically stored as yaml files in the same directory, you shouldn't have issue
+managing this namespace unless you decide to redo an experiment with the same name. If you do this, you'll
+need to manually delete the experiment folder if you want new results to be propogated.
