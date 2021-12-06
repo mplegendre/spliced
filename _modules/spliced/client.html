@@ -193,13 +193,6 @@
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;generate a list of commands to run splices (instead of a matrix&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># recommended: ghcr.io/buildsi/spack-ubuntu-20.04</span>
-    <span class="n">matrix</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--container&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;container base to provide to matrix.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
     <span class="c1"># Generate matrix of splice commands and outputs, etc.</span>
     <span class="n">command</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;matrix&quot;</span><span class="p">,</span>
@@ -221,6 +214,13 @@
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Set a limit for job entries to generate (defaults to 0, no limit)&quot;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># recommended: ghcr.io/buildsi/spack-ubuntu-20.04</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;--container&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;container base to use.&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Generate the matrix from a config</span>
