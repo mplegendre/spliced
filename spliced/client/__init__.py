@@ -115,6 +115,13 @@ def get_parser():
         description="generate a list of commands to run splices (instead of a matrix",
     )
 
+    # recommended: ghcr.io/buildsi/spack-ubuntu-20.04
+    matrix.add_argument(
+        "-c",
+        "--container",
+        help="container base to provide to matrix.",
+    )
+
     # Generate matrix of splice commands and outputs, etc.
     command = subparsers.add_parser(
         "matrix",
@@ -136,13 +143,6 @@ def get_parser():
             help="Set a limit for job entries to generate (defaults to 0, no limit)",
             type=int,
             default=0,
-        )
-
-        # recommended: ghcr.io/buildsi/spack-ubuntu-20.04
-        cmd.add_argument(
-            "-c",
-            "--container",
-            help="container base to use.",
         )
 
         # Generate the matrix from a config

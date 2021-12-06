@@ -53,3 +53,4 @@ class Actual(Prediction):
                     results.append(res)
 
         splice.predictions["actual"] = results
+        print(splice.predictions)

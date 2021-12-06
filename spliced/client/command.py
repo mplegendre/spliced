@@ -94,8 +94,6 @@ def generate_spack_commands(args, experiment, command=None):
             experiment.replace,
             experiment.name,
         )
-        if args.container:
-            cmd = "%s --containers %s" % (cmd, args.container)
         if command:
             cmd = "%s %s" % (cmd, command)
         commands.append(cmd)
@@ -134,8 +132,6 @@ def generate_spack_matrix(args, experiment, command=None):
             experiment.replace,
             experiment.name,
         )
-        if args.container:
-            cmd = "%s --containers %s" % (cmd, args.container)
         if command:
             cmd = "%s %s" % (cmd, command)
         matrix.append(

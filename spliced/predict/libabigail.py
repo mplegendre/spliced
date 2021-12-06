@@ -113,3 +113,4 @@ class LibabigailPrediction(Prediction):
 
         if predictions:
             splice.predictions["libabigail"] = predictions
+            print(splice.predictions)

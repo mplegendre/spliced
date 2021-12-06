@@ -47,6 +47,7 @@ class SymbolatorPrediction(Prediction):
 
         if predictions:
             splice.predictions["symbolator"] = predictions
+            print(splice.predictions)
 
 
 def run_symbol_solver(corpora):
