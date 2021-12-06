@@ -16,7 +16,7 @@ from io import BytesIO
 from zipfile import ZipFile
 from urllib.request import urlopen
 
-here = os.path.abspath(os.path.dirname(__file__))
+here = os.environ.get("GITHUB_WORKSPACE") or os.getcwd()
 
 
 ################################################################################
@@ -232,9 +232,28 @@ def download_artifacts(artifacts, output, days):
         for filename in recursive_find(tmp):
             relpath = filename.replace(tmp, "").strip(os.sep)
 
+            # replace version @ with -
+            filepath = filename.replace("@", "-")
+
+            # Remove package prefix
+            filepath = filepath.replace("pkg-", "", 1)
+
+            # We don't need the directory - can get metadata from the basename
+            filepath = os.path.basename(filepath)
+
+            # Add main package at top level
+            pkg = filepath.split("-")[0]
+
+            # Get the experiment also
+            experiment = (
+                filepath.split("experiment")[-1].replace("splices.json", "").strip("-")
+            )
+
+            # Just maintain the entire directory structure to read for the folder
+            filepath = filepath.replace("-splices.json", "")
+
             # Let's split the package name and version as part of the path
-            pkg, version = os.path.basename(filename).split("-")[0:2]
-            finalpath = os.path.join(output, pkg, version, os.path.basename(filename))
+            finalpath = os.path.join(output, experiment, pkg, filepath, "splices.json")
 
             # If the file doesn't have size, don't add
             size = get_size(filename)
