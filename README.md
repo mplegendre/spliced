@@ -2,20 +2,11 @@
 
 <img src="https://github.com/buildsi/spliced/raw/main/docs/assets/img/spliced-small.png">
 
-🚧️ under development 🚧️
-
 [![Test Spliced Action](https://github.com/buildsi/spliced/actions/workflows/test-action.yaml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/test-action.yaml)
 [![Build Ubuntu Bases](https://github.com/buildsi/spliced/actions/workflows/container-bases.yaml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/container-bases.yaml)
 [![Update Docs](https://github.com/buildsi/spliced/actions/workflows/docs.yml/badge.svg)](https://github.com/buildsi/spliced/actions/workflows/docs.yml)
 
 ⭐️ [View Documentation](https://buildsi.github.io/spliced/) ⭐️ 
-
-## TODO
-
- - finish GitHub actions when we can test artifacts, add to docs
- - GitHub action to generate splice result interface from splice repository with artifacts
- - update spliced-results repo to use it
- - then do release of spliced on pip
  
 ## License
 

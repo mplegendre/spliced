@@ -15,4 +15,5 @@ The versions coincide with releases on pip. Only major versions will be released
 
 ## [0.0.x](https://github.com/buildsi/spliced/tree/main) (0.0.x)
  - Initial creation of project (0.0.1)
+ - Skeleton release (0.0.0)
 
