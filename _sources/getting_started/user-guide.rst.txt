@@ -248,13 +248,13 @@ Once you have a result, you can use the ``validate`` command to ensure the forma
 
     $ spliced validate pkg-sqlite\@3.35.5-splice-zlib-with-zlib-experiment-sqlite-splices.json
 
+
 GitHub Actions
 ==============
 
 Spliced provides a set of GitHub actions that make it easy to run splice experiments on GitHub.
 The current documentation for these is in the ``.github/workflows/test-action.yaml`` file, and we will
-add more detail here when the action development is finished.
-
+add more detail here when the action development is finished (or when it is requested, whichever comes first).
 
 Artifacts
 ---------
