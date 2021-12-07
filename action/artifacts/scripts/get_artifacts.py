@@ -194,6 +194,7 @@ def recursive_find(base, pattern="*"):
         for filename in fnmatch.filter(filenames, pattern):
             yield os.path.join(root, filename)
 
+
 def read_json(filename):
     with open(filename, "r") as fd:
         content = json.loads(fd.read())
@@ -229,7 +230,7 @@ def download_artifacts(artifacts, output, days):
             abort_if_fail(response, "Unable to download artifact %s" % artifact["name"])
 
         # Grab the created at date
-        created_at = artifact['created_at']
+        created_at = artifact["created_at"]
 
         # Create a temporary directory
         tmp = tempfile.mkdtemp()
@@ -243,15 +244,15 @@ def download_artifacts(artifacts, output, days):
             data = read_json(filename)
             has_predictions = False
             for datum in data:
-                for tester, resultlist in datum.get('predictions', {}).items():
+                for tester, resultlist in datum.get("predictions", {}).items():
                     if resultlist:
                         has_predictions = True
                         break
-                        
+
             if not has_predictions:
                 print("Skipping %s, does not have predictions." % filename)
                 continue
-            
+
             relpath = filename.replace(tmp, "").strip(os.sep)
 
             # replace version @ with -
@@ -291,7 +292,9 @@ def download_artifacts(artifacts, output, days):
             # Otherwise compare by hash (and date?)
             else:
 
-                created_at_ts = datetime.strptime(created_at, "%Y-%m-%dT%H:%M:%SZ").timestamp()
+                created_at_ts = datetime.strptime(
+                    created_at, "%Y-%m-%dT%H:%M:%SZ"
+                ).timestamp()
                 old_created_at = os.stat(finalpath).st_ctime
 
                 # If the recent is newer, copy over
