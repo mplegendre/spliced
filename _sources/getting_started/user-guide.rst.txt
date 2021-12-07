@@ -239,6 +239,15 @@ Finally, you can save the result directly to output file (json) instead:
     $ spliced matrix examples/curl.yaml --outfile examples/curl-matrix.json
 
 
+Validate
+--------
+
+Once you have a result, you can use the ``validate`` command to ensure the format is correct.
+
+.. code-block:: console
+
+    $ spliced validate pkg-sqlite\@3.35.5-splice-zlib-with-zlib-experiment-sqlite-splices.json
+
 GitHub Actions
 ==============
 

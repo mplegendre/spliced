@@ -61,6 +61,38 @@ The following fields are not required but suggested:
  - original_lib or original_binary if relevant for the command
  - any other relevant results information
 
+
+Develop with Docker
+===================
+
+You can easily build a docker container in the present working directory:
+
+.. code-block:: console
+
+    $ docker build -t spliced .
+    
+And then shell in, binding code so we can install from there.
+
+.. code-block:: console
+
+    $ docker run -it --entrypoint bash -v $PWD:/code spliced 
+
+Install locally:
+
+.. code-block:: console
+
+    $ pip install -e .
+
+And try generating and running a command:
+
+.. code-block:: console
+
+    $ spliced command examples/sqlite.yaml
+    ...
+    $ spliced splice --package sqlite@3.35.4 --splice zlib --runner spack --replace zlib --experiment sqlite sqlite3 -version
+    pkg-sqlite@3.35.5-splice-zlib-with-zlib-experiment-sqlite-splices.json is valid! 😂️
+
+
 Creating a container base
 =========================
 
