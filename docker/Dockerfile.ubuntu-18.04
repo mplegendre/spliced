@@ -60,7 +60,7 @@ RUN python3 -m pip install --upgrade pip setuptools wheel \
 ENV SPACK_ROOT=/opt/spack    
 ENV SPACK_ADD_DEBUG_FLAGS=true
 
-RUN git clone -b vsoch/db-17 https://github.com/vsoch/spack /opt/spack && \
+RUN git clone -b vsoch/db-17-splice https://github.com/vsoch/spack /opt/spack && \
     cd /opt/spack && \
     . share/spack/setup-env.sh && \
     spack compiler find && \

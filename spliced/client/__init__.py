@@ -115,6 +115,13 @@ def get_parser():
         description="generate a list of commands to run splices (instead of a matrix",
     )
 
+    # Validate a spliced result
+    validate = subparsers.add_parser(
+        "validate",
+        description="Validate a spliced result file",
+    )
+    validate.add_argument("json_file", help="json file to validate")
+
     # Generate matrix of splice commands and outputs, etc.
     command = subparsers.add_parser(
         "matrix",
@@ -212,6 +219,8 @@ def run_spliced():
         from .command import matrix as main
     if args.command == "command":
         from .command import command as main
+    if args.command == "validate":
+        from .validate import main
 
     # Pass on to the correct parser
     return_code = 0

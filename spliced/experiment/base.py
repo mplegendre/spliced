@@ -88,6 +88,7 @@ class Experiment:
         """
         self.config = utils.read_yaml(config_file)
         self.config_file = config_file
+        self._experiment = re.sub("[.](yml|yaml)", "", os.path.basename(config_file))
         if validate:
             self.validate()
 
