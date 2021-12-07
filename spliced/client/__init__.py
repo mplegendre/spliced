@@ -184,7 +184,7 @@ def run_spliced():
 
     # Show the version and exit
     if args.command == "version" or args.version:
-        print(shpc.__version__)
+        print(spliced.__version__)
         sys.exit(0)
 
     setup_logger(

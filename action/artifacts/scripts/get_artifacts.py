@@ -194,6 +194,11 @@ def recursive_find(base, pattern="*"):
         for filename in fnmatch.filter(filenames, pattern):
             yield os.path.join(root, filename)
 
+def read_json(filename):
+    with open(filename, "r") as fd:
+        content = json.loads(fd.read())
+    return content
+
 
 def download_artifacts(artifacts, output, days):
     """
@@ -223,6 +228,9 @@ def download_artifacts(artifacts, output, days):
         if response.status_code != 200:
             abort_if_fail(response, "Unable to download artifact %s" % artifact["name"])
 
+        # Grab the created at date
+        created_at = artifact['created_at']
+
         # Create a temporary directory
         tmp = tempfile.mkdtemp()
         zipfile = ZipFile(BytesIO(response.content))
@@ -230,6 +238,20 @@ def download_artifacts(artifacts, output, days):
 
         # Loop through files, add those that aren't present
         for filename in recursive_find(tmp):
+
+            # But require that we have predictions!
+            data = read_json(filename)
+            has_predictions = False
+            for datum in data:
+                for tester, resultlist in datum.get('predictions', {}).items():
+                    if resultlist:
+                        has_predictions = True
+                        break
+                        
+            if not has_predictions:
+                print("Skipping %s, does not have predictions." % filename)
+                continue
+            
             relpath = filename.replace(tmp, "").strip(os.sep)
 
             # replace version @ with -
@@ -266,18 +288,15 @@ def download_artifacts(artifacts, output, days):
                 print("Found new result file: %s" % relpath)
                 save_artifact(filename, finalpath)
 
-            # Otherwise compare by hash
+            # Otherwise compare by hash (and date?)
             else:
-                newhash = get_file_hash(filename)
-                oldhash = get_file_hash(finalpath)
 
-                # If they aren't equal, compare by date and add newer
-                if oldhash != newhash:
-                    existing_timestamp = get_creation_timestamp(finalpath)
-                    contender_timestamp = get_creation_timestamp(filename)
-                    if contender_timestamp > existing_timestamp:
-                        print("Found a newer result for %s" % relpath)
-                        save_artifact(filename, finalpath)
+                created_at_ts = datetime.strptime(created_at, "%Y-%m-%dT%H:%M:%SZ").timestamp()
+                old_created_at = os.stat(finalpath).st_ctime
+
+                # If the recent is newer, copy over
+                if created_at_ts > old_created_at:
+                    save_artifact(filename, finalpath)
 
         # Cleanup the temporary directory
         shutil.rmtree(tmp)
