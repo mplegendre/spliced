@@ -133,6 +133,7 @@
             <span class="n">spec_main</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">do_install</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_splice</span><span class="p">(</span><span class="s2">&quot;package-install-failed&quot;</span><span class="p">,</span> <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span>
 
         <span class="c1"># The second library we can try splicing all versions</span>
         <span class="c1"># This is the splice IN and splice OUT</span>
