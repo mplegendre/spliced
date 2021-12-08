@@ -244,19 +244,9 @@ def download_artifacts(artifacts, output, days):
         # Loop through files, add those that aren't present
         for filename in recursive_find(tmp):
 
-            # But require that we have predictions!
             data = read_json(filename)
-            has_predictions = False
-            for datum in data:
-                for tester, resultlist in datum.get("predictions", {}).items():
-                    if resultlist:
-                        has_predictions = True
-                        break
 
-            if not has_predictions:
-                print("Skipping %s, does not have predictions." % filename)
-                continue
-
+            # We can load any valid result (does not need to have predictions)
             try:
                 jsonschema.validate(data, schema=spliced_result_schema)
             except:
