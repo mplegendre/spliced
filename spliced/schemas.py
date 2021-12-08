@@ -81,7 +81,6 @@ result_properties = {
         "package": {"type": "string"},
         "binaries": {
             "type": "object",
-            "required": ["spliced", "original"],
             "properties": {
                 "original": {"type": "array", "items": {"type": "string"}},
                 "spliced": {"type": "array", "items": {"type": "string"}},
@@ -90,7 +89,6 @@ result_properties = {
         "predictions": predictions,
         "libs": {
             "type": "object",
-            "required": ["spliced", "original"],
             "properties": {
                 "original": libs,
                 "spliced": libs,

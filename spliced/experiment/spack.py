@@ -55,6 +55,7 @@ class SpackExperiment(Experiment):
             spec_main.package.do_install(force=True)
         except:
             self.add_splice("package-install-failed", success=False)
+            return []
 
         # The second library we can try splicing all versions
         # This is the splice IN and splice OUT
