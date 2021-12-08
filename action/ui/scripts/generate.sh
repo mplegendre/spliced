@@ -30,17 +30,19 @@ if [ ! -d "${INPUT_DOCS}" ]; then
 
 fi
 
-if [ -z ${INPUT_EXPERIMENT+x} ]; then 
+if [ -z "${INPUT_EXPERIMENT}" ]; then 
+    printf "Experiment directory is not set, will look over all directories under ${INPUT_ARTIFACTS}\n"
     for dirname in $(ls ${INPUT_ARTIFACTS}); do
         printf "python visualize-predictions.py artifacts/$dirname\n"
-        python ${ACTION_PATH}/scripts/visualize-predictions.py artifacts/$dirname
+        python ${ACTION_PATH}/scripts/visualize-predictions.py ${INPUT_ARTIFACTS}/$dirname
     done   
 else 
 
     # Make sure experiment directory exists first
     dirname=${INPUT_ARTIFACTS}/${INPUT_EXPERIMENT}
+    printf "Looking for directory ${dirname}\n"
     if [ ! -d "{dirname}" ]; then
-        printf "${dirname}d does not exist\n"
+        printf "${dirname} does not exist\n"
         exit
     fi
 
