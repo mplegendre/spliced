@@ -117,6 +117,22 @@ def main(pkg_dir):
                     rows.add(datum.get("package"))
                     result_types.add(datum.get("result"))
 
+                    # If we don't have predictions, add to "failed" tester
+                    if not datum["predictions"]:
+                        results["failed"].append(
+                            {
+                                "binary": None,
+                                "lib": None,
+                                "prediction": None,
+                                "message": None,
+                                "return_code": None,
+                                "command": None,
+                                "splice": datum.get("splice"),
+                                "package": datum.get("package"),
+                                "result": datum.get("result"),
+                            }
+                        )
+
                     for tester, resultlist in datum["predictions"].items():
                         if not resultlist:
                             continue
