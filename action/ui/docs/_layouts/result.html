@@ -78,7 +78,7 @@ tr.group:hover {
         <br>
         <p>This plot shows the top level splice outcomes, meaning across testers. For example, if a package or splice didn't concretize we will see it here.</p>
         <h2>Outcomes</h2>
-        <p><ul>{% for outcome in page.outcomes %}<li>{{ outcome[0] }}: {{ outcome[1]}}</li>{% endfor %}</ul></p>
+        <p><ul><li>combination-not-run: 0</li>{% for outcome in page.outcomes %}<li>{{ outcome[0] }}: {{ outcome[1]}}</li>{% endfor %}</ul></p>
         
         <h2>Plot of Outcomes</h2>
         <p>Across an experiment, we have multiple testers. However, sometimes there is a failure unrelated to the tester. For example, a concretization fails, spack can't install
