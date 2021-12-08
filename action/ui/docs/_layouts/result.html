@@ -150,7 +150,9 @@ tr.group:hover {
          $.each(resultlist, function(i, result){
              result['tester'] = tester
 
-             result['binary'] = result['binary'].split(/[\\/]/).pop();
+             if (result['binary']) {
+                 result['binary'] = result['binary'].split(/[\\/]/).pop();         
+             }
              if (result['lib']) {
                  result['lib'] = result['lib'].split(/[\\/]/).pop();
              }

@@ -129,7 +129,7 @@ def main(pkg_dir):
 
                         # We can't assume the testers have the exact same testing set (but they can)
                         for res in resultlist:
-                            has_predictions = False
+                            has_predictions = True
 
                             # We add binaries/libs that we have predictions for
                             results[tester].append(
