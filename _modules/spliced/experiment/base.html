@@ -117,7 +117,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">=</span> <span class="n">package</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_experiment</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span> <span class="o">=</span> <span class="n">experiment</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="n">success</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">splice</span> <span class="o">=</span> <span class="n">splice</span>
@@ -137,7 +137,7 @@
             <span class="s2">&quot;binaries&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaries</span><span class="p">,</span>
             <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">,</span>
             <span class="s2">&quot;libs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">libs</span><span class="p">,</span>
-            <span class="s2">&quot;experiment&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment</span><span class="p">,</span>
+            <span class="s2">&quot;experiment&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="p">,</span>
             <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">,</span>
             <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
             <span class="s2">&quot;splice&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">splice</span><span class="p">,</span>
@@ -262,7 +262,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiment</span>
 
