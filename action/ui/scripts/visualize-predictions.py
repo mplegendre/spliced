@@ -91,7 +91,7 @@ def main(pkg_dir):
     commands = set()
 
     # Results will be a table of results for each predictor
-    results = {}
+    results = {"failed": []}
 
     # Assemble experiments
     for pkg in os.listdir(os.path.abspath(pkg_dir)):
