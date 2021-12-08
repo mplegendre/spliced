@@ -118,20 +118,7 @@ def main(pkg_dir):
                     result_types.add(datum.get("result"))
 
                     # If we don't have predictions, add to "failed" tester
-                    if not datum["predictions"]:
-                        results["failed"].append(
-                            {
-                                "binary": None,
-                                "lib": None,
-                                "prediction": None,
-                                "message": None,
-                                "return_code": None,
-                                "command": None,
-                                "splice": datum.get("splice"),
-                                "package": datum.get("package"),
-                                "result": datum.get("result"),
-                            }
-                        )
+                    has_predictions = False
 
                     for tester, resultlist in datum["predictions"].items():
                         if not resultlist:
@@ -142,6 +129,7 @@ def main(pkg_dir):
 
                         # We can't assume the testers have the exact same testing set (but they can)
                         for res in resultlist:
+                            has_predictions = False
 
                             # We add binaries/libs that we have predictions for
                             results[tester].append(
@@ -157,6 +145,22 @@ def main(pkg_dir):
                                     "result": datum.get("result"),
                                 }
                             )
+
+                    if not has_predictions:
+                        results["failed"].append(
+                            {
+                                "binary": None,
+                                "lib": None,
+                                "prediction": None,
+                                "message": None,
+                                "return_code": None,
+                                "command": None,
+                                "splice": datum.get("splice"),
+                                "package": datum.get("package"),
+                                "result": datum.get("result"),
+                            }
+                        )
+
 
     print("Found %s testers: %s" % (len(testers), " ".join(testers)))
 

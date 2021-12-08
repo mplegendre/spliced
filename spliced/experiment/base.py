@@ -39,7 +39,7 @@ class Splice:
 
         self.predictions = {}
         self.package = package
-        self._experiment = None
+        self.experiment = experiment
         self.success = success
         self.result = result
         self.splice = splice
@@ -59,7 +59,7 @@ class Splice:
             "binaries": self.binaries,
             "predictions": self.predictions,
             "libs": self.libs,
-            "experiment": self._experiment,
+            "experiment": self.experiment,
             "result": self.result,
             "success": self.success,
             "splice": self.splice,
@@ -184,7 +184,7 @@ class Experiment:
 
     @property
     def name(self):
-        if self.config_file:
+        if self.config_file is not None:
             return os.path.basename(self.config_file).split(".")[0]
         return self._experiment
 
