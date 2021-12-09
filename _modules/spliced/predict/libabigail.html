@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>spliced.predict.libabigail &mdash; Spliced 0.0.1 documentation</title>
+  <title>spliced.predict.libabigail &mdash; Spliced 0.0.11 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sphinx-argparse.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> Spliced
           </a>
               <div class="version">
-                0.0.1
+                0.0.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -98,15 +98,13 @@
 
 
 <div class="viewcode-block" id="LibabigailPrediction"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.libabigail.LibabigailPrediction">[docs]</a><span class="k">class</span> <span class="nc">LibabigailPrediction</span><span class="p">(</span><span class="n">Prediction</span><span class="p">):</span>
-<div class="viewcode-block" id="LibabigailPrediction.predict"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.libabigail.LibabigailPrediction.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">splice</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Run libabigail to add to the predictions</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># If no splice libs, cut out early</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">:</span>
-            <span class="k">return</span>
 
-        <span class="c1"># First effort - do we have abicompat on the path?</span>
+    <span class="n">abicompat</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="LibabigailPrediction.find_abicompat"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.libabigail.LibabigailPrediction.find_abicompat">[docs]</a>    <span class="k">def</span> <span class="nf">find_abicompat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find abicompat and add to class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">abicompat</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;abicompat&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">abicompat</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;abicompat not found on path, will look for spack instead.&quot;</span><span class="p">)</span>
@@ -142,17 +140,91 @@
             <span class="k">return</span>
 
         <span class="c1"># This is the executable path</span>
-        <span class="n">abicompat</span> <span class="o">=</span> <span class="n">abicompat</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span> <span class="o">=</span> <span class="n">abicompat</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span></div>
 
+<div class="viewcode-block" id="LibabigailPrediction.predict"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.libabigail.LibabigailPrediction.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">splice</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run libabigail to add to the predictions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If no splice libs, cut out early</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">find_abicompat</span><span class="p">()</span>
+
+        <span class="c1"># We have TWO cases here:</span>
+        <span class="c1"># Case 1: We ONLY have a list of libs that were spliced.</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="s2">&quot;spliced&quot;</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span>
+            <span class="ow">and</span> <span class="s2">&quot;original&quot;</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span>
+            <span class="ow">and</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">[</span><span class="s2">&quot;spliced&quot;</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">splice_equivalent_libs</span><span class="p">(</span><span class="n">splice</span><span class="p">,</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">[</span><span class="s2">&quot;spliced&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Case 2: We are mocking a splice, and we have TWO sets of libs: some original, and some to replace with</span>
+        <span class="k">elif</span> <span class="s2">&quot;dep&quot;</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span> <span class="ow">and</span> <span class="s2">&quot;replace&quot;</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">splice_different_libs</span><span class="p">(</span>
+                <span class="n">splice</span><span class="p">,</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">[</span><span class="s2">&quot;dep&quot;</span><span class="p">],</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">]</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="LibabigailPrediction.splice_different_libs"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.libabigail.LibabigailPrediction.splice_different_libs">[docs]</a>    <span class="k">def</span> <span class="nf">splice_different_libs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">splice</span><span class="p">,</span> <span class="n">original_libs</span><span class="p">,</span> <span class="n">replace_libs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        In the case of splicing &quot;the same lib&quot; into itself (a different version)</span>
+<span class="sd">        we can do matching based on names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If we have spliced binaries, this means the spack splice was successful.</span>
+        <span class="c1"># Otherwise, we do not, but we have the original deps to test</span>
+        <span class="n">binaries</span> <span class="o">=</span> <span class="n">splice</span><span class="o">.</span><span class="n">get_binaries</span><span class="p">()</span>
+
+        <span class="c1"># Flatten original and replacement libs</span>
+        <span class="n">original_libs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">original_libs</span><span class="p">]))</span>
+        <span class="n">replace_libs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">replace_libs</span><span class="p">]))</span>
+
+        <span class="c1"># Assemble a set of predictions</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">binary</span> <span class="ow">in</span> <span class="n">binaries</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">original_lib</span> <span class="ow">in</span> <span class="n">original_libs</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">replace_lib</span> <span class="ow">in</span> <span class="n">replace_libs</span><span class="p">:</span>
+
+                    <span class="c1"># Run abicompat to make a prediction</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span>
+                        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">original_lib</span><span class="p">,</span> <span class="n">replace_lib</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s2">&quot;splice_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;different_lib&quot;</span>
+
+                    <span class="c1"># The spliced lib and original</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s2">&quot;replace&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">replace_lib</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s2">&quot;lib&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">original_lib</span>
+
+                    <span class="c1"># If there is a libabigail output, print to see</span>
+                    <span class="k">if</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">])</span>
+                    <span class="n">res</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="ow">and</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;return_code&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+                    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">predictions</span><span class="p">:</span>
+            <span class="n">splice</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="s2">&quot;libabigail&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span></div>
+
+<div class="viewcode-block" id="LibabigailPrediction.splice_equivalent_libs"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.predict.libabigail.LibabigailPrediction.splice_equivalent_libs">[docs]</a>    <span class="k">def</span> <span class="nf">splice_equivalent_libs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">splice</span><span class="p">,</span> <span class="n">libs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        In the case of splicing &quot;the same lib&quot; into itself (a different version)</span>
+<span class="sd">        we can do matching based on names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Flatten original libs into flat list</span>
         <span class="n">original_libs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
             <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;original&quot;</span><span class="p">,</span> <span class="p">[])])</span>
         <span class="p">)</span>
 
+        <span class="c1"># If we have spliced binaries, this means the spack splice was successful.</span>
+        <span class="c1"># Otherwise, we do not, but we have the original deps to test</span>
+        <span class="n">binaries</span> <span class="o">=</span> <span class="n">splice</span><span class="o">.</span><span class="n">get_binaries</span><span class="p">()</span>
+
         <span class="c1"># Assemble a set of predictions</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">binary</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">binaries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spliced&quot;</span><span class="p">,</span> <span class="p">[]):</span>
-            <span class="k">for</span> <span class="n">libset</span> <span class="ow">in</span> <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spliced&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+        <span class="k">for</span> <span class="n">binary</span> <span class="ow">in</span> <span class="n">binaries</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">libset</span> <span class="ow">in</span> <span class="n">libs</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">libset</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]:</span>
 
                     <span class="c1"># Try to match libraries based on prefix (versioning is likely to change)</span>
@@ -175,8 +247,11 @@
                     <span class="k">for</span> <span class="n">original</span> <span class="ow">in</span> <span class="n">originals</span><span class="p">:</span>
 
                         <span class="c1"># Run abicompat to make a prediction</span>
-                        <span class="n">res</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">lib</span><span class="p">))</span>
+                        <span class="n">res</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span>
+                            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">lib</span><span class="p">)</span>
+                        <span class="p">)</span>
                         <span class="n">res</span><span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary</span>
+                        <span class="n">res</span><span class="p">[</span><span class="s2">&quot;splice_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;same_lib&quot;</span>
 
                         <span class="c1"># The spliced lib and original</span>
                         <span class="n">res</span><span class="p">[</span><span class="s2">&quot;lib&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lib</span>

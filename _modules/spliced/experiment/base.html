@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>spliced.experiment.base &mdash; Spliced 0.0.1 documentation</title>
+  <title>spliced.experiment.base &mdash; Spliced 0.0.11 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sphinx-argparse.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> Spliced
           </a>
               <div class="version">
-                0.0.1
+                0.0.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -129,6 +129,27 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
+<div class="viewcode-block" id="Splice.get_binaries"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.experiment.base.Splice.get_binaries">[docs]</a>    <span class="k">def</span> <span class="nf">get_binaries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return if the splice was successful and the binaries for it&quot;&quot;&quot;</span>
+        <span class="n">binaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spliced&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">binaries</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Warning - this splice was not successful or not possible, predictions will use original binaries installed of spliced.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">binaries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;original&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="n">binaries</span></div>
+
+<div class="viewcode-block" id="Splice.get_libs"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.experiment.base.Splice.get_libs">[docs]</a>    <span class="k">def</span> <span class="nf">get_libs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return if the splice was successful and the libs for it&quot;&quot;&quot;</span>
+        <span class="c1"># Same is case for libset - use what we have</span>
+        <span class="n">libs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">libs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spliced&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">libs</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Warning - this splice was not successful or not possible, predictions will use dependency libs (not spliced) instead.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">libs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">libs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;libs&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">return</span> <span class="n">libs</span></div>
+
 <div class="viewcode-block" id="Splice.to_dict"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.experiment.base.Splice.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the result as a dictionary</span>
@@ -159,6 +180,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">splices</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_splice_versions</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Experiment.load"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.experiment.base.Experiment.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -268,7 +290,6 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">splice_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;splice_versions&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_splice_versions</span>
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;command&quot;</span><span class="p">)</span>
