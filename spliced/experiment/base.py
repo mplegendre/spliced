@@ -102,6 +102,7 @@ class Experiment:
     def __init__(self):
         self.splices = []
         self.config_file = None
+        self._splice_versions = None
 
     def load(self, config_file, validate=True):
         """
