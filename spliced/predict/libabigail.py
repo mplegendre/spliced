@@ -105,32 +105,28 @@ class LibabigailPrediction(Prediction):
         # Assemble a set of predictions
         predictions = []
         for binary in binaries:
-            for libset in libs:
-                for lib in libset["paths"]:
-                    for original_lib in original_libs:
+            for original_lib in original_libs:
+                for replace_lib in replace_libs:
 
-                        # Run abicompat to make a prediction
-                        res = utils.run_command(
-                            "%s %s %s" % (self.abicompat, original, lib)
-                        )
-                        res["binary"] = binary
-                        res["splice_type"] = "same_lib"
+                    # Run abicompat to make a prediction
+                    res = utils.run_command(
+                        "%s %s %s" % (self.abicompat, original_lib, replace_lib)
+                    )
+                    res["binary"] = binary
+                    res["splice_type"] = "different_lib"
 
-                        # The spliced lib and original
-                        res["lib"] = lib
-                        res["original_lib"] = lib
+                    # The spliced lib and original
+                    res["replace"] = replace_lib
+                    res["lib"] = original_lib
 
-                        # If there is a libabigail output, print to see
-                        if res["message"] != "":
-                            print(res["message"])
-                        res["prediction"] = (
-                            res["message"] == "" and res["return_code"] == 0
-                        )
-                        predictions.append(res)
+                    # If there is a libabigail output, print to see
+                    if res["message"] != "":
+                        print(res["message"])
+                    res["prediction"] = res["message"] == "" and res["return_code"] == 0
+                    predictions.append(res)
 
         if predictions:
             splice.predictions["libabigail"] = predictions
-            print(splice.predictions)
 
     def splice_equivalent_libs(self, splice, libs):
         """

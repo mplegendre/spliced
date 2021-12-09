@@ -94,7 +94,8 @@ result_properties = {
                 "original": libs,
                 "spliced": libs,
                 # If a splice fails, we still provide libs here
-                "libs": libs,
+                "dep": libs,
+                "replace": libs,
             },
             "spliced": {"type": "array", "items": {"type": "string"}},
         },
