@@ -57,7 +57,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-spliced.schemas">spliced.schemas module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-spliced.experiment">spliced.experiment module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-spliced.experiment.base">spliced.experiment.base module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-spliced.experiment.spack">spliced.experiment.spack module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spliced-experiment-spack-module">spliced.experiment.spack module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-spliced.predict">spliced.predict module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-spliced.predict.base">spliced.predict.base module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-spliced.predict.symbolator">spliced.predict.symbolator module</a></li>
@@ -317,7 +317,7 @@ or it can represent a failed state (for any number of reasons)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="spliced.experiment.base.Experiment.init">
-<code class="sig-name descname"><span class="pre">init</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">package</span></span></em>, <em><span class="n"><span class="pre">splice</span></span></em>, <em><span class="n"><span class="pre">experiment</span></span></em>, <em><span class="n"><span class="pre">command</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.init" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname"><span class="pre">init</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">package</span></span></em>, <em><span class="n"><span class="pre">splice</span></span></em>, <em><span class="n"><span class="pre">experiment</span></span></em>, <em><span class="n"><span class="pre">command</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="n"><span class="pre">splice_versions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/base.html#Experiment.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.base.Experiment.init" title="Permalink to this definition"></a></dt>
 <dd><p>Init config variables directly</p>
 </dd></dl>
 
@@ -362,6 +362,11 @@ or it can represent a failed state (for any number of reasons)</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="spliced.experiment.base.Experiment.splice">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">splice</span></code><a class="headerlink" href="#spliced.experiment.base.Experiment.splice" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="spliced.experiment.base.Experiment.splice_versions">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">splice_versions</span></code><a class="headerlink" href="#spliced.experiment.base.Experiment.splice_versions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -410,46 +415,8 @@ will hold a result. A default splice result is not successful</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-spliced.experiment.spack">
-<span id="spliced-experiment-spack-module"></span><h2>spliced.experiment.spack module<a class="headerlink" href="#module-spliced.experiment.spack" title="Permalink to this headline"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="spliced.experiment.spack.SpackExperiment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">spliced.experiment.spack.</span></code><code class="sig-name descname"><span class="pre">SpackExperiment</span></code><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#SpackExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.SpackExperiment" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#spliced.experiment.base.Experiment" title="spliced.experiment.base.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">spliced.experiment.base.Experiment</span></code></a></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="spliced.experiment.spack.SpackExperiment.do_splice">
-<code class="sig-name descname"><span class="pre">do_splice</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">splice_name</span></span></em>, <em><span class="n"><span class="pre">spec_main</span></span></em>, <em><span class="n"><span class="pre">transitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#SpackExperiment.do_splice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.SpackExperiment.do_splice" title="Permalink to this definition"></a></dt>
-<dd><p>do the splice, the spliced spec goes into the main spec</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spliced.experiment.spack.SpackExperiment.run">
-<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#SpackExperiment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.SpackExperiment.run" title="Permalink to this definition"></a></dt>
-<dd><p>Perform a splice with a SpecA (a specific spec with a binary),
-and SpecB (the high level spec that is a dependency that we can test
-across versions).</p>
-<p>Arguments:
-package (specA_name): the name of the main package we are splicing up
-splice (specB_name): the spec we are removing / switching out
-replace (specC_name): the spec we are splicing in (replacing with)</p>
-<p>For many cases, specB and specC might be the same, but not always.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="spliced.experiment.spack.add_contenders">
-<code class="sig-prename descclassname"><span class="pre">spliced.experiment.spack.</span></code><code class="sig-name descname"><span class="pre">add_contenders</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">spec</span></span></em>, <em><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lib'</span></span></em>, <em><span class="n"><span class="pre">match</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#add_contenders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.add_contenders" title="Permalink to this definition"></a></dt>
-<dd><p>Given a spec, find contender binaries and/or libs</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="spliced.experiment.spack.add_libraries">
-<code class="sig-prename descclassname"><span class="pre">spliced.experiment.spack.</span></code><code class="sig-name descname"><span class="pre">add_libraries</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">spec</span></span></em>, <em><span class="n"><span class="pre">library_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/spliced/experiment/spack.html#add_libraries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spliced.experiment.spack.add_libraries" title="Permalink to this definition"></a></dt>
-<dd><p>Given a spliced spec, get a list of its libraries matching a name (e.g., a library
-that has been spliced in). E.g., if the spec is curl, we might look for zlib.</p>
-</dd></dl>
-
+<div class="section" id="spliced-experiment-spack-module">
+<h2>spliced.experiment.spack module<a class="headerlink" href="#spliced-experiment-spack-module" title="Permalink to this headline"></a></h2>
 </div>
 <div class="section" id="module-spliced.predict">
 <span id="spliced-predict-module"></span><h2>spliced.predict module<a class="headerlink" href="#module-spliced.predict" title="Permalink to this headline"></a></h2>
