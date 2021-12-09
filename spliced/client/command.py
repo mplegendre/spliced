@@ -72,11 +72,27 @@ def get_compiler_labels(container):
     return labels
 
 
+def get_splice_versions(experiment):
+    """
+    Get splice versions
+    """
+    # Do we have splice versions? If not, the only splice is the splice
+    splice_versions = [experiment.splice]
+    if experiment.splice_versions:
+        splice_versions = set()
+        for version in experiment.splice_versions:
+            splice_versions.add("%s@%s" % (experiment.splice, version))
+        splice_versions = list(splice_versions)
+    return splice_versions
+
+
 def generate_spack_commands(args, experiment, command=None):
     """
     Generate a list of spliced commands
     """
+    # These are package versions - splice versions come from list in config
     versions = get_package_versions(experiment.package)
+    splice_versions = get_splice_versions(experiment)
     labels = get_compiler_labels(args.container)
     commands = []
 
@@ -86,17 +102,19 @@ def generate_spack_commands(args, experiment, command=None):
     # Generate list of commands
     for version in versions:
 
-        # versioned package
-        package = "%s@%s" % (experiment.package, version)
-        cmd = "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s" % (
-            package,
-            experiment.splice,
-            experiment.replace,
-            experiment.name,
-        )
-        if command:
-            cmd = "%s %s" % (cmd, command)
-        commands.append(cmd)
+        for splice_version in splice_versions:
+
+            # versioned package
+            package = "%s@%s" % (experiment.package, version)
+            cmd = "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s" % (
+                package,
+                splice_version,
+                experiment.replace,
+                experiment.name,
+            )
+            if command:
+                cmd = "%s %s" % (cmd, command)
+            commands.append(cmd)
 
     # flatten to be printable
     commands = "\n".join(commands)
@@ -114,6 +132,7 @@ def generate_spack_matrix(args, experiment, command=None):
     """
     versions = get_package_versions(experiment.package)
     labels = get_compiler_labels(args.container)
+    splice_versions = get_splice_versions(experiment)
 
     # We will build up a matrix of container and associated compilers
     matrix = []
@@ -124,27 +143,29 @@ def generate_spack_matrix(args, experiment, command=None):
     # Generate list of commands
     for version in versions:
 
-        # versioned package
-        package = "%s@%s" % (experiment.package, version)
-        cmd = "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s" % (
-            package,
-            experiment.splice,
-            experiment.replace,
-            experiment.name,
-        )
-        if command:
-            cmd = "%s %s" % (cmd, command)
-        matrix.append(
-            {
-                "command": cmd,
-                "package": package,
-                "runner": "spack",
-                "splice": experiment.splice,
-                "replace": experiment.replace,
-                "experiment": experiment.name,
-                "container": args.container,
-            }
-        )
+        for splice_version in splice_versions:
+
+            # versioned package
+            package = "%s@%s" % (experiment.package, version)
+            cmd = "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s" % (
+                package,
+                splice_version,
+                experiment.replace,
+                experiment.name,
+            )
+            if command:
+                cmd = "%s %s" % (cmd, command)
+            matrix.append(
+                {
+                    "command": cmd,
+                    "package": package,
+                    "runner": "spack",
+                    "splice": experiment.splice,
+                    "replace": experiment.replace,
+                    "experiment": experiment.name,
+                    "container": args.container,
+                }
+            )
 
     # We can only get up to 256 max - select randomly
     if args.limit != 0 and len(matrix) >= args.limit:

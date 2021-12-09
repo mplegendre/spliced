@@ -64,13 +64,19 @@ class SpackExperiment(Experiment):
         # Return list of spliced specs!
         splices = []
 
-        for version in spec_spliced.package.versions:
-            if not version:
-                continue
+        # Do we already have a version?
+        if "@" in self.splice:
+            self.do_splice(self.splice, spec_main, transitive)
 
-            # spec_spliced version goes into spec_main
-            splice = "%s@%s" % (self.splice, version)
-            self.do_splice(splice, spec_main, transitive)
+        # Otherwise, splice all versions
+        else:
+            for version in spec_spliced.package.versions:
+                if not version:
+                    continue
+
+                # spec_spliced version goes into spec_main
+                splice = "%s@%s" % (self.splice, version)
+                self.do_splice(splice, spec_main, transitive)
 
     def do_splice(self, splice_name, spec_main, transitive=True):
         """

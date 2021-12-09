@@ -93,7 +93,14 @@ class Experiment:
             self.validate()
 
     def init(
-        self, package, splice, experiment, command=None, replace=None, validate=True
+        self,
+        package,
+        splice,
+        experiment,
+        command=None,
+        replace=None,
+        validate=True,
+        splice_versions=None,
     ):
         """
         Init config variables directly
@@ -103,6 +110,8 @@ class Experiment:
             self._experiment = experiment
         if command:
             self.config["command"] = command
+        if splice_versions:
+            self._splice_versions = splice_versions
         if validate:
             self.validate()
 
@@ -177,6 +186,10 @@ class Experiment:
     @property
     def splice(self):
         return self.config.get("splice")
+
+    @property
+    def splice_versions(self):
+        return self.config.get("splice_versions") or self._splice_versions
 
     @property
     def command(self):
