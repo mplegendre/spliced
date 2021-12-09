@@ -6,7 +6,7 @@ set -e
 printf "release: ${INPUT_RELEASE}\n"
 printf "branch: ${INPUT_BRANCH}\n"
 
-if [[ "${INPUT_DOINSTALL}" == "false" ]];
+if [[ "${INPUT_DOINSTALL}" == "false" ]]; then
     printf "Skipping install, spliced should be installed by you.\n"
     exit 0;
 else
