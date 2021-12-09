@@ -26,6 +26,10 @@ inputs:
     description: A spack release to use (if defined, overrides branch)
     required: false
     default: ""
+  do_install:
+    description: Should spliced be installed first?
+    required: false
+    default: true  
 
 runs:
   using: "composite"
@@ -40,6 +44,7 @@ runs:
       env:
         INPUT_BRANCH: ${{ inputs.branch }}
         INPUT_RELEASE: ${{ inputs.release }}
+        INPUT_DOINSTALL: ${{ inputs.do_install }}
       run: ${{ env.ACTION_ROOT }}/install/scripts/install.sh
       shell: bash
 

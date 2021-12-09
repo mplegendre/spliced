@@ -6,6 +6,11 @@ set -e
 printf "release: ${INPUT_RELEASE}\n"
 printf "branch: ${INPUT_BRANCH}\n"
 
+if [[ "${INPUT_DOINSTALL}" == "false" ]];
+    printf "Skipping install, spliced should be installed by you.\n"
+    exit 0;
+fi
+
 python -m pip install --upgrade pip setuptools wheel
 
 # Case 1: no branch or release, install from pip
