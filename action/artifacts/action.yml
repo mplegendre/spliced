@@ -49,6 +49,7 @@ runs:
         GITHUB_REPOSITORY: ${{ github.repository }}
         INPUT_TOKEN: ${{ inputs.token }}
         INPUT_DAYS: ${{ inputs.days }}
+        INPUT_RUNID: ${{ inputs.runid }}
         INPUT_OUTDIR: ${{ inputs.outdir }}
         ACTION_PATH: ${{ github.action_path }}
       run: ${{ github.action_path }}/scripts/run.sh
