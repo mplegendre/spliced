@@ -93,6 +93,8 @@ result_properties = {
             "properties": {
                 "original": libs,
                 "spliced": libs,
+                # If a splice fails, we still provide libs here
+                "libs": libs,
             },
             "spliced": {"type": "array", "items": {"type": "string"}},
         },

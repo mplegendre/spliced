@@ -51,6 +51,27 @@ class Splice:
         """
         pass
 
+    def get_binaries(self):
+        """return if the splice was successful and the binaries for it"""
+        binaries = self.binaries.get("spliced", [])
+        if not binaries:
+            print(
+                "Warning - this splice was not successful or not possible, predictions will use original binaries installed of spliced."
+            )
+            binaries = self.binaries.get("original", [])
+        return binaries
+
+    def get_libs(self):
+        """return if the splice was successful and the libs for it"""
+        # Same is case for libset - use what we have
+        libs = self.libs.get("spliced", [])
+        if not libs:
+            print(
+                "Warning - this splice was not successful or not possible, predictions will use dependency libs (not spliced) instead."
+            )
+            libs = self.libs.get("libs", [])
+        return libs
+
     def to_dict(self):
         """
         Return the result as a dictionary
