@@ -113,7 +113,7 @@ def generate_spack_commands(args, experiment, command=None):
                 experiment.name,
             )
             if command:
-                cmd = "%s %s" % (cmd, command)
+                cmd = '%s %s' % (cmd, command)
             commands.append(cmd)
 
     # flatten to be printable
@@ -154,7 +154,7 @@ def generate_spack_matrix(args, experiment, command=None):
                 experiment.name,
             )
             if command:
-                cmd = "%s %s" % (cmd, command)
+                cmd = '%s %s' % (cmd, command)
             matrix.append(
                 {
                     "command": cmd,

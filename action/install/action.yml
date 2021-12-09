@@ -17,5 +17,6 @@ runs:
       env:
         INPUT_BRANCH: ${{ inputs.branch }}
         INPUT_RELEASE: ${{ inputs.release }}
+        INPUT_DOINSTALL: "true"
       run: ${{ github.action_path }}/scripts/install.sh
       shell: bash

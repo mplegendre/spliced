@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip. Only major versions will be released as tags on Github.
 
 ## [0.0.x](https://github.com/buildsi/spliced/tree/main) (0.0.x)
+ - Support for mock splice with spack (0.0.11)
  - Initial creation of project (0.0.1)
  - Skeleton release (0.0.0)
 

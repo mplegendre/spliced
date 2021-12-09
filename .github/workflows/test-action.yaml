@@ -20,10 +20,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install spliced
+        run: pip install -e .
       - name: Generate Matrix
         uses: ./action/matrix
         id: matrix
         with:
+          do_install: "false"
           yaml: ./examples/curl.yaml
 
       - name: Show result
@@ -34,6 +37,7 @@ jobs:
       - name: Retrieve aritfacts
         uses: ./action/artifacts
         with:
+          do_install: "false"
           token: ${{ secrets.GITHUB_TOKEN }}
           
   get-artifacts-ui:
