@@ -211,7 +211,9 @@ class Experiment:
 
     @property
     def splice_versions(self):
-        return self.config.get("splice_versions") or self._splice_versions
+        return self.config.get("splice_versions") or getattr(
+            self, "_splice_versions", None
+        )
 
     @property
     def command(self):
