@@ -9,6 +9,8 @@ printf "branch: ${INPUT_BRANCH}\n"
 if [[ "${INPUT_DOINSTALL}" == "false" ]];
     printf "Skipping install, spliced should be installed by you.\n"
     exit 0;
+else
+    printf "Moving forward with install ${INPUT_DOINSTALL}\n"
 fi
 
 python -m pip install --upgrade pip setuptools wheel
