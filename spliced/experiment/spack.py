@@ -114,12 +114,30 @@ class SpackExperiment(Experiment):
             )
             return
 
+        # And install the dependency
+        try:
+            dep.package.do_install(force=True)
+        except:
+            self.add_splice(
+                "mock-splice-install-failed", success=False, splice=splice_name
+            )
+            return
+
         # And also the replacement spec
         try:
             replace = Spec(replace_name).concretized()
         except:
             self.add_splice(
                 "mock-replace-concretization-failed", success=False, splice=replace_name
+            )
+            return
+
+        # And install the replacement
+        try:
+            replace.package.do_install(force=True)
+        except:
+            self.add_splice(
+                "mock-replace-install-failed", success=False, splice=splice_name
             )
             return
 
