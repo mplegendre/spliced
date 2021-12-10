@@ -137,7 +137,7 @@ class SpackExperiment(Experiment):
             replace.package.do_install(force=True)
         except:
             self.add_splice(
-                "mock-replace-install-failed", success=False, splice=splice_name
+                "mock-replace-install-failed", success=False, splice=replace_name
             )
             return
 
