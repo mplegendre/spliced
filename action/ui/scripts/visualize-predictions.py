@@ -45,7 +45,7 @@ toc: 1
 """
 
 
-def plot_heatmap(df, save_to=None):
+def plot_clustermap(df, save_to=None):
     sns.set_theme(style="white")
 
     f, ax = plt.subplots(figsize=(30, 30))
@@ -56,6 +56,29 @@ def plot_heatmap(df, save_to=None):
 
     # Draw the heatmap with the mask and correct aspect ratio
     p = sns.clustermap(
+        df, cmap=cmap, center=0, square=True, linewidths=0.5, cbar_kws={"shrink": 0.5}
+    )
+    # used for heatmap
+    # p.tick_params(labelsize=5)
+    # p.set_xlabel("Splice", fontsize=12)
+    # p.set_ylabel("Binary", fontsize=12)
+
+    if save_to:
+        plt.savefig(save_to)
+    return plt
+
+
+def plot_heatmap(df, save_to=None):
+    sns.set_theme(style="white")
+
+    f, ax = plt.subplots(figsize=(30, 30))
+
+    # Generate a custom diverging colormap
+    cmap = sns.color_palette()
+    # cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+    # Draw the heatmap with the mask and correct aspect ratio
+    p = sns.heatmap(
         df, cmap=cmap, center=0, square=True, linewidths=0.5, cbar_kws={"shrink": 0.5}
     )
     # used for heatmap
@@ -204,12 +227,20 @@ def main(pkg_dir):
     write_json(outcomes, os.path.join(result_dir, "outcomes.json"))
 
     # Plot basics
-    save_to = os.path.join(result_dir, "%s-%s.pdf" % (experiment, package))
-    fig = plot_heatmap(df, save_to)
-    save_to = os.path.join(result_dir, "%s-%s.png" % (experiment, package))
-    fig = plot_heatmap(df, save_to)
-    save_to = os.path.join(result_dir, "%s-%s.svg" % (experiment, package))
-    fig = plot_heatmap(df, save_to)
+    if df.shape[1] > 1:
+        save_to = os.path.join(result_dir, "%s-%s.pdf" % (experiment, package))
+        fig = plot_clustermap(df, save_to)
+        save_to = os.path.join(result_dir, "%s-%s.png" % (experiment, package))
+        fig = plot_clustermap(df, save_to)
+        save_to = os.path.join(result_dir, "%s-%s.svg" % (experiment, package))
+        fig = plot_clustermap(df, save_to)
+    else:
+        save_to = os.path.join(result_dir, "%s-%s.pdf" % (experiment, package))
+        fig = plot_clustermap(df, save_to)
+        save_to = os.path.join(result_dir, "%s-%s.png" % (experiment, package))
+        fig = plot_clustermap(df, save_to)
+        save_to = os.path.join(result_dir, "%s-%s.svg" % (experiment, package))
+        fig = plot_clustermap(df, save_to)
 
     # Save the filenames for images
     listing += "png: %s-%s.png\n" % (experiment, package)

@@ -184,7 +184,7 @@ tr.group:hover {
 
         // Color tests by status (pass or fail)
         "rowCallback": function(row, data) {
-             if ( data.result == "splice-success" ) {
+             if ( data.prediction == true ) {
                   $('td:eq(1)', row).css('background-color', 'darkgreen').css('color', 'white');
              } else {             
                   $('td:eq(1)', row).css('background-color', 'crimson').css('color', 'white');
