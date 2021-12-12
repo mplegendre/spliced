@@ -71,7 +71,7 @@ def plot_clustermap(df, save_to=None):
 def plot_heatmap(df, save_to=None):
     sns.set_theme(style="white")
 
-    f, ax = plt.subplots(figsize=(30, 30))
+    f, ax = plt.subplots(figsize=(10, 12))
 
     # Generate a custom diverging colormap
     cmap = sns.color_palette()
@@ -184,7 +184,6 @@ def main(pkg_dir):
                             }
                         )
 
-
     print("Found %s testers: %s" % (len(testers), " ".join(testers)))
 
     # Create top level data frame
@@ -227,7 +226,12 @@ def main(pkg_dir):
     write_json(outcomes, os.path.join(result_dir, "outcomes.json"))
 
     # Plot basics
-    if df.shape[1] > 1:
+    no_results = False
+    if df.shape[1] == 0:
+        print("Warning - empty data frame! No results to show for %s" % pkg_dir)
+        no_results = True
+
+    elif df.shape[1] > 1:
         save_to = os.path.join(result_dir, "%s-%s.pdf" % (experiment, package))
         fig = plot_clustermap(df, save_to)
         save_to = os.path.join(result_dir, "%s-%s.png" % (experiment, package))
@@ -236,26 +240,27 @@ def main(pkg_dir):
         fig = plot_clustermap(df, save_to)
     else:
         save_to = os.path.join(result_dir, "%s-%s.pdf" % (experiment, package))
-        fig = plot_clustermap(df, save_to)
+        fig = plot_heatmap(df, save_to)
         save_to = os.path.join(result_dir, "%s-%s.png" % (experiment, package))
-        fig = plot_clustermap(df, save_to)
+        fig = plot_heatmap(df, save_to)
         save_to = os.path.join(result_dir, "%s-%s.svg" % (experiment, package))
-        fig = plot_clustermap(df, save_to)
+        fig = plot_heatmap(df, save_to)
 
     # Save the filenames for images
-    listing += "png: %s-%s.png\n" % (experiment, package)
-    listing += "svg: %s-%s.svg\n" % (experiment, package)
-    listing += "pdf: %s-%s.pdf\n" % (experiment, package)
+    if not no_results:
+        listing += "png: %s-%s.png\n" % (experiment, package)
+        listing += "svg: %s-%s.svg\n" % (experiment, package)
+        listing += "pdf: %s-%s.pdf\n" % (experiment, package)
 
-    # And the entry for the results
-    listing += "results: results-list.json\n"
-    listing += "outcomes: %s\n" % outcomes
+        # And the entry for the results
+        listing += "results: results-list.json\n"
+        listing += "outcomes: %s\n" % outcomes
 
-    # Generate a markdown for each
-    content = template % (package, experiment, package, experiment, listing)
-    md = os.path.join(result_dir, "index.md")
-    with open(md, "w") as fd:
-        fd.write(content)
+        # Generate a markdown for each
+        content = template % (package, experiment, package, experiment, listing)
+        md = os.path.join(result_dir, "index.md")
+        with open(md, "w") as fd:
+            fd.write(content)
 
 
 if __name__ == "__main__":
