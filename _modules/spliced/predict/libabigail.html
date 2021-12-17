@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>spliced.predict.libabigail &mdash; Spliced 0.0.12 documentation</title>
+  <title>spliced.predict.libabigail &mdash; Spliced 0.0.13 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sphinx-argparse.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> Spliced
           </a>
               <div class="version">
-                0.0.12
+                0.0.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -188,7 +188,12 @@
                 <span class="k">for</span> <span class="n">replace_lib</span> <span class="ow">in</span> <span class="n">replace_libs</span><span class="p">:</span>
 
                     <span class="c1"># Run abicompat to make a prediction</span>
-                    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">original_lib</span><span class="p">,</span> <span class="n">replace_lib</span><span class="p">)</span>
+                    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span>
+                        <span class="n">binary</span><span class="p">,</span>
+                        <span class="n">original_lib</span><span class="p">,</span>
+                        <span class="n">replace_lib</span><span class="p">,</span>
+                    <span class="p">)</span>
                     <span class="n">res</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
 
                     <span class="c1"># Additional debugging</span>
@@ -252,7 +257,7 @@
 
                         <span class="c1"># Run abicompat to make a prediction</span>
                         <span class="n">res</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span>
-                            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">lib</span><span class="p">)</span>
+                            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">binary</span><span class="p">,</span> <span class="n">original</span><span class="p">,</span> <span class="n">lib</span><span class="p">)</span>
                         <span class="p">)</span>
                         <span class="n">res</span><span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary</span>
                         <span class="n">res</span><span class="p">[</span><span class="s2">&quot;splice_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;same_lib&quot;</span>
