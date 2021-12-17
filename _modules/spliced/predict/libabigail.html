@@ -188,9 +188,13 @@
                 <span class="k">for</span> <span class="n">replace_lib</span> <span class="ow">in</span> <span class="n">replace_libs</span><span class="p">:</span>
 
                     <span class="c1"># Run abicompat to make a prediction</span>
-                    <span class="n">res</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span>
-                        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">original_lib</span><span class="p">,</span> <span class="n">replace_lib</span><span class="p">)</span>
-                    <span class="p">)</span>
+                    <span class="n">command</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abicompat</span><span class="p">,</span> <span class="n">original_lib</span><span class="p">,</span> <span class="n">replace_lib</span><span class="p">)</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+                    <span class="c1"># Additional debugging</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">()</span>
                     <span class="n">res</span><span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary</span>
                     <span class="n">res</span><span class="p">[</span><span class="s2">&quot;splice_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;different_lib&quot;</span>
 
