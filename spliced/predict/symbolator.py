@@ -1,17 +1,15 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from .base import Prediction
-from spliced.logger import logger
 from symbolator.asp import PyclingoDriver, ABIGlobalSolverSetup, ABICompatSolverSetup
 from symbolator.facts import get_facts
 from symbolator.corpus import JsonCorpusLoader, Corpus
 
 import itertools
 import os
-import re
 
 
 class SymbolatorPrediction(Prediction):
@@ -25,7 +23,7 @@ class SymbolatorPrediction(Prediction):
             and "original" in splice.libs
             and splice.libs["spliced"]
         ):
-            self.splice_equivalent_libs(splice, self.libs["spliced"])
+            self.splice_equivalent_libs(splice, splice.libs["spliced"])
 
         # Case 2: We are mocking a splice, and we have TWO sets of libs: some original, and some to replace with
         elif "dep" in splice.libs and "replace" in splice.libs:

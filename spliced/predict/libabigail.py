@@ -9,7 +9,6 @@ import spliced.utils as utils
 import itertools
 
 import os
-import re
 
 
 def add_to_path(path):
@@ -27,7 +26,7 @@ class LibabigailPrediction(Prediction):
         Find abicompat and add to class
         """
         abicompat = utils.which("abicompat")
-        if not abicompat["message"]:
+        if not abicompat:
             logger.warning("abicompat not found on path, will look for spack instead.")
 
             # Try getting from spack
@@ -54,25 +53,25 @@ class LibabigailPrediction(Prediction):
                 )
                 return
 
-        if not abicompat["message"]:
+        if not abicompat:
             logger.error(
                 "You must either have abicompat (libabigail) on the path, or spack."
             )
             return
 
         # This is the executable path
-        self.abicompat = abicompat["message"]
+        self.abicompat = abicompat
 
     def predict(self, splice):
         """
         Run libabigail to add to the predictions
         """
-        # If no splice libs, cut out early
-        if not splice.libs:
-            return
-
         if not self.abicompat:
             self.find_abicompat()
+
+        # If no splice libs, cut out early
+        if not splice.libs or not self.abicompat:
+            return
 
         # We have TWO cases here:
         # Case 1: We ONLY have a list of libs that were spliced.

@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -44,6 +44,13 @@ class Splice:
         self.result = result
         self.splice = splice
         self.command = command
+        self.id = None
+
+    def add_identifier(self, identifier):
+        """
+        Add some experiment specific identifier (e.g., dag hash for spack)
+        """
+        self.id = identifier
 
     def match_libs(self):
         """
@@ -181,7 +188,7 @@ class Experiment:
     def validate(self):
         jsonschema.validate(instance=self.config, schema=spliced.schemas.spliced_schema)
 
-    def add_splice(self, result, success=False, splice=None):
+    def add_splice(self, result, success=False, splice=None, command=None):
         """Add a splice to the experiment
 
         A splice can either be successful (so it will have libs, binaries, etc)
@@ -192,7 +199,7 @@ class Experiment:
             splice=splice or self.splice,
             result=result,
             success=success,
-            command=self.command,
+            command=command or self.command,
             experiment=self.name,
             replace=self.replace,
         )

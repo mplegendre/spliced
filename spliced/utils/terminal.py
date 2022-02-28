@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -8,17 +8,14 @@ from subprocess import Popen, PIPE, STDOUT
 import os
 import sys
 import shlex
+import shutil
 
 
 def which(software, strip_newline=True):
     """get_install will return the path to where Singularity (or another
     executable) is installed.
     """
-    cmd = ["which", software]
-    result = run_command(cmd)
-    if strip_newline is True:
-        result["message"] = result["message"].strip("\n")
-    return result
+    return shutil.which(software)
 
 
 def check_install(software, quiet=True, command="--version"):
@@ -64,7 +61,7 @@ def run_command(cmd, stream=False):
         cmd = shlex.split(cmd)
     stdout = PIPE if not stream else None
 
-    output = Popen(cmd, stderr=STDOUT, stdout=PIPE)
+    output = Popen(cmd, stderr=STDOUT, stdout=stdout)
     t = output.communicate()[0], output.returncode
     output = {"message": t[0], "return_code": t[1]}
 
@@ -99,12 +96,11 @@ def add_spack_to_path():
     Find spack and add to path, allowing for import of spack modules
     """
     # Find path to spack install
-    spack = which("spack-python")
-    if not spack["message"]:
+    spack_python = which("spack-python")
+    if not spack_python:
         sys.exit("Make sure spack and spack-python are on your path for this runner.")
 
     # Find spack's location and its prefix, add libs and external libs
-    spack_python = spack["message"]
     spack_prefix = os.path.dirname(os.path.dirname(spack_python))
     spack_lib_path = os.path.join(spack_prefix, "lib", "spack")
     spack_external_libs = os.path.join(spack_lib_path, "external")
