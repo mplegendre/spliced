@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>spliced.experiment.spack &mdash; Spliced 0.0.13 documentation</title>
+  <title>spliced.experiment.spack &mdash; Spliced 0.0.14 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sphinx-argparse.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../../../index.html" class="icon icon-home"> Spliced
           </a>
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -76,7 +76,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for spliced.experiment.spack</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Copyright 2013-2021 Lawrence Livermore National Security, LLC and other</span>
+<span></span><span class="c1"># Copyright 2013-2022 Lawrence Livermore National Security, LLC and other</span>
 <span class="c1"># Spack Project Developers. See the top-level COPYRIGHT file for details.</span>
 <span class="c1">#</span>
 <span class="c1"># SPDX-License-Identifier: (Apache-2.0 OR MIT)</span>
@@ -87,11 +87,6 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">shlex</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">spack.binary_distribution</span> <span class="k">as</span> <span class="nn">bindist</span>
@@ -138,9 +133,6 @@
         <span class="c1"># The second library we can try splicing all versions</span>
         <span class="c1"># This is the splice IN and splice OUT</span>
         <span class="n">spec_spliced</span> <span class="o">=</span> <span class="n">Spec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splice</span><span class="p">)</span>
-
-        <span class="c1"># Return list of spliced specs!</span>
-        <span class="n">splices</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># A splice with the same package as the library is the first type</span>
         <span class="c1"># For this case, we already have a version in mind</span>
@@ -353,7 +345,10 @@
 
         <span class="c1"># And add libs for the spliced dependency (each from original and spliced)</span>
         <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">[</span><span class="s2">&quot;spliced&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_libraries</span><span class="p">(</span><span class="n">spliced_spec</span><span class="p">,</span> <span class="n">spliced_lib</span><span class="p">)</span>
-        <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">[</span><span class="s2">&quot;original&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_libraries</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">spliced_lib</span><span class="p">)</span></div>
+        <span class="n">splice</span><span class="o">.</span><span class="n">libs</span><span class="p">[</span><span class="s2">&quot;original&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_libraries</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">spliced_lib</span><span class="p">)</span>
+
+        <span class="c1"># Add the dag hash as the identifier</span>
+        <span class="n">splice</span><span class="o">.</span><span class="n">add_identifier</span><span class="p">(</span><span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">spliced_spec</span><span class="o">.</span><span class="n">dag_hash</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="add_libraries"><a class="viewcode-back" href="../../../api_reference/internal/spliced.html#spliced.experiment.spack.add_libraries">[docs]</a><span class="k">def</span> <span class="nf">add_libraries</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">library_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

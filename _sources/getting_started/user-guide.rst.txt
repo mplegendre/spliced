@@ -34,6 +34,7 @@ spliced currently has the following predictors:
  - **actual**: This is a base level of predictor, which (given that you provide a testing command) will simply test a binary, as is, and tell you if it works. This is our "ground truth" for the other predictors that aren't actually testing anything, but just predicting.
  - **libabigail**: is a `library provided by RedHat <https://sourceware.org/libabigail/>`_ that provides tooling for assessing ABI compatibility.
  - **symbolator**: is a `simple library developed by the group here <https://github.com/buildsi/symbolator>`_ that makes predictions based on comparing symbol sets.
+ - **spack-test**: will, given that the splice has an id that matches a spack dag hash, run tests associated with that spec.
  - **smeagle**: is `another library being developed here <https://github.com/buildsi/Smeagle>`_ that is not added yet, but will be eventually.
 
 Config File
@@ -158,10 +159,9 @@ to a specific number of predictors, use `--predictor` for each.
 
     $ spliced splice --package curl@7.50.2 --splice zlib --experiment curl --predictor symbolator
 
-
-Note that the "actual" run is always performed if a command is provided, but not if it isn't.
-The above would run the experiment with a symbolator prediction. Here is what an entire run looks like, with a testing command and 
-output saved to a json file with `--outfile`
+The above would run the experiment with a symbolator prediction.
+Note that the "actual" run is always performed if a command is provided, but not if it isn't. 
+Here is what an entire run looks like, with a testing command and  output saved to a json file with `--outfile`
 
 .. code-block:: console
 

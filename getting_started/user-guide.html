@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; Spliced 0.0.13 documentation</title>
+  <title>User Guide &mdash; Spliced 0.0.14 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/sphinx-argparse.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> Spliced
           </a>
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -129,6 +129,7 @@ spliced currently has the following predictors:</p>
 <li><strong>actual</strong>: This is a base level of predictor, which (given that you provide a testing command) will simply test a binary, as is, and tell you if it works. This is our “ground truth” for the other predictors that aren’t actually testing anything, but just predicting.</li>
 <li><strong>libabigail</strong>: is a <a class="reference external" href="https://sourceware.org/libabigail/">library provided by RedHat</a> that provides tooling for assessing ABI compatibility.</li>
 <li><strong>symbolator</strong>: is a <a class="reference external" href="https://github.com/buildsi/symbolator">simple library developed by the group here</a> that makes predictions based on comparing symbol sets.</li>
+<li><strong>spack-test</strong>: will, given that the splice has an id that matches a spack dag hash, run tests associated with that spec.</li>
 <li><strong>smeagle</strong>: is <a class="reference external" href="https://github.com/buildsi/Smeagle">another library being developed here</a> that is not added yet, but will be eventually.</li>
 </ul>
 </div></blockquote>
@@ -138,9 +139,9 @@ spliced currently has the following predictors:</p>
 <p>Great, so let’s get started! A splice experiment starts with a config file, a YAML file
 to help you generate splicing commands, either to run yourself locally or to hand
 of to an automated solution. It’s a simple YAML file that should minimally have the following:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">curl</span>
-<span class="nt">splice</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">zlib</span>
-<span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">curl --head https://linuxize.com/</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">package</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curl</span><span class="w"></span>
+<span class="nt">splice</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">zlib</span><span class="w"></span>
+<span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curl --head https://linuxize.com/</span><span class="w"></span>
 </pre></div>
 </div>
 <p>It’s currently a flat list because we have one of each, and this can be adjusted as needed.
@@ -151,9 +152,9 @@ The above says:</p>
 <div class="line">Take the binary ‘curl’ for the package curl, and replace the chosen version of zlib with all other versions of zlib.</div>
 </div>
 <p>You can also ask to splice in a totally different dependency:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">package</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hdf5</span>
-<span class="nt">splice</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">openmpi</span>
-<span class="nt">replace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mpich</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">package</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hdf5</span><span class="w"></span>
+<span class="nt">splice</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openmpi</span><span class="w"></span>
+<span class="nt">replace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mpich</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The above says</p>
@@ -226,9 +227,9 @@ to a specific number of predictors, use <cite>–predictor</cite> for each.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced splice --package curl@7.50.2 --splice zlib --experiment curl --predictor symbolator
 </pre></div>
 </div>
-<p>Note that the “actual” run is always performed if a command is provided, but not if it isn’t.
-The above would run the experiment with a symbolator prediction. Here is what an entire run looks like, with a testing command and
-output saved to a json file with <cite>–outfile</cite></p>
+<p>The above would run the experiment with a symbolator prediction.
+Note that the “actual” run is always performed if a command is provided, but not if it isn’t.
+Here is what an entire run looks like, with a testing command and  output saved to a json file with <cite>–outfile</cite></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>spliced splice --package curl@7.50.2 --splice zlib --runner spack --replace zlib --experiment curl --outfile examples/curl-result.json curl --head https://linuxize.com/
 <span class="go">Concretizing curl@7.50.2</span>
 <span class="go">[+] /home/vanessa/Desktop/Code/spack-vsoch/opt/spack/linux-ubuntu20.04-skylake/gcc-9.3.0/berkeley-db-18.1.40-pdlzkb4o4qsw3nglppv7eqjm7lepqvod</span>
