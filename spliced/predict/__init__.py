@@ -2,6 +2,7 @@ from .base import Prediction, Actual
 from .symbolator import SymbolatorPrediction
 from .libabigail import LibabigailPrediction
 from .spack import SpackTest
+from .smeagle import SmeaglePrediction
 
 
 def get_predictors(names=None):
@@ -10,6 +11,7 @@ def get_predictors(names=None):
     """
     names = names or []
     predictors = {
+        "smeagle": SmeaglePrediction(),
         "symbolator": SymbolatorPrediction(),
         "libabigail": LibabigailPrediction(),
         "spack-test": SpackTest(),
