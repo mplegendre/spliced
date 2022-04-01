@@ -273,12 +273,12 @@ class SpackExperiment(Experiment):
         splice.add_identifier("/" + spliced_spec.dag_hash()[0:6])
 
 
-def get_linked_deps(self, spec):
+def get_linked_deps(spec):
     """
     A helper function to only return a list of linked deps
     """
     linked_deps = []
-    contenders = spec.to_dict()["spec"]["nodes"][0]["dependencies"]
+    contenders = spec.to_dict()["spec"]["nodes"][0].get("dependencies", [])
     for contender in contenders:
         if "link" in contender["type"]:
             linked_deps.append(contender["name"])
