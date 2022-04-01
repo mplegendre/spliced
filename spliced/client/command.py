@@ -104,11 +104,14 @@ def generate_spack_commands(args, experiment, command=None):
 
             # versioned package
             package = "%s@%s" % (experiment.package, version)
-            cmd = "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s" % (
-                package,
-                splice_version,
-                experiment.replace,
-                experiment.name,
+            cmd = (
+                "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s"
+                % (
+                    package,
+                    splice_version,
+                    experiment.replace,
+                    experiment.name,
+                )
             )
             if command:
                 cmd = "%s %s" % (cmd, command)
@@ -144,11 +147,14 @@ def generate_spack_matrix(args, experiment, command=None):
 
             # versioned package
             package = "%s@%s" % (experiment.package, version)
-            cmd = "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s" % (
-                package,
-                splice_version,
-                experiment.replace,
-                experiment.name,
+            cmd = (
+                "spliced splice --package %s --splice %s --runner spack --replace %s --experiment %s"
+                % (
+                    package,
+                    splice_version,
+                    experiment.replace,
+                    experiment.name,
+                )
             )
             if command:
                 cmd = "%s %s" % (cmd, command)

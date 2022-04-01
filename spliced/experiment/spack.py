@@ -273,6 +273,23 @@ class SpackExperiment(Experiment):
         splice.add_identifier("/" + spliced_spec.dag_hash()[0:6])
 
 
+def get_linked_deps(self, spec):
+    """
+    A helper function to only return a list of linked deps
+    """
+    linked_deps = []
+    contenders = spec.to_dict()["spec"]["nodes"][0]["dependencies"]
+    for contender in contenders:
+        if "link" in contender["type"]:
+            linked_deps.append(contender["name"])
+
+    deps = []
+    for contender in spec.dependencies():
+        if contender.name in linked_deps:
+            deps.append(contender)
+    return deps
+
+
 def add_libraries(spec, library_name=None):
     """
     Given a spliced spec, get a list of its libraries matching a name (e.g., a library
@@ -282,11 +299,13 @@ def add_libraries(spec, library_name=None):
     libs = []
 
     # For each depedency, add libraries
-    deps = spec.dependencies()
+    deps = get_linked_deps(spec)
+
+    # Only choose deps that are for link time
     seen = set([x.name for x in deps])
     while deps:
         dep = deps.pop(0)
-        new_deps = [x for x in dep.dependencies() if x.name not in seen]
+        new_deps = [x for x in get_linked_deps(dep) if x.name not in seen]
         [seen.add(x.name) for x in new_deps]
         deps += new_deps
 
