@@ -9,6 +9,7 @@ from .base import Experiment
 import os
 import sys
 import shlex
+import traceback
 
 try:
     import spack.binary_distribution as bindist
@@ -50,6 +51,7 @@ class SpackExperiment(Experiment):
             spec_main.package.do_install(force=True)
         except:
             self.add_splice("package-install-failed", success=False)
+            traceback.print_exc()
             return []
 
         # The second library we can try splicing all versions
@@ -101,6 +103,7 @@ class SpackExperiment(Experiment):
         try:
             dep = Spec(splice_name).concretized()
         except:
+            traceback.print_exc()
             self.add_splice(
                 "mock-splice-concretization-failed", success=False, splice=splice_name
             )
@@ -110,6 +113,7 @@ class SpackExperiment(Experiment):
         try:
             dep.package.do_install(force=True)
         except:
+            traceback.print_exc()
             self.add_splice(
                 "mock-splice-install-failed", success=False, splice=splice_name
             )
@@ -119,6 +123,7 @@ class SpackExperiment(Experiment):
         try:
             replace = Spec(replace_name).concretized()
         except:
+            traceback.print_exc()
             self.add_splice(
                 "mock-replace-concretization-failed", success=False, splice=replace_name
             )
@@ -128,6 +133,7 @@ class SpackExperiment(Experiment):
         try:
             replace.package.do_install(force=True)
         except:
+            traceback.print_exc()
             self.add_splice(
                 "mock-replace-install-failed", success=False, splice=replace_name
             )
@@ -150,6 +156,7 @@ class SpackExperiment(Experiment):
         try:
             dep = Spec(splice_name).concretized()
         except:
+            traceback.print_exc()
             self.add_splice(
                 "splice-concretization-failed", success=False, splice=splice_name
             )
@@ -159,6 +166,7 @@ class SpackExperiment(Experiment):
         try:
             dep.package.do_install(force=True)
         except:
+            traceback.print_exc()
             self.add_splice("splice-install-failed", success=False, splice=splice_name)
             return
 
@@ -182,6 +190,7 @@ class SpackExperiment(Experiment):
         try:
             spack.rewiring.rewire(spliced_spec)
         except:
+            traceback.print_exc()
             splice = self.add_splice(
                 "rewiring-failed", success=False, splice=splice_name
             )
