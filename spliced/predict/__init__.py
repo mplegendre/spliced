@@ -13,8 +13,8 @@ def get_predictors(names=None):
     predictors = {
         #        "smeagle": SmeaglePrediction(),
         #        "symbolator": SymbolatorPrediction(),
-        #"libabigail": LibabigailPrediction(),
-        #"spack-test": SpackTest(),
+        "libabigail": LibabigailPrediction(),
+        "spack-test": SpackTest(),
     }
     if names:
         keepers = {}
@@ -24,6 +24,6 @@ def get_predictors(names=None):
         predictors = keepers
 
     # Provide the actual no matter what
-    # predictors["actual"] = Actual()
+    predictors["actual"] = Actual()
 
     return predictors
