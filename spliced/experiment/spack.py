@@ -12,6 +12,7 @@ import shlex
 import traceback
 
 try:
+    import spack.config
     import spack.binary_distribution as bindist
     import spack.rewiring
     import spack.bootstrap
@@ -27,6 +28,7 @@ class SpackExperiment(Experiment):
         # Ensure we have debug flags added
         os.putenv("SPACK_ADD_DEBUG_FLAGS", "true")
         os.environ["SPACK_ADD_DEBUG_FLAGS"] = "true"
+        spack.config.set("config:deprecated", True, scope="defaults")
 
     def run(self, *args, **kwargs):
         """
