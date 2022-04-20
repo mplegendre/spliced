@@ -526,20 +526,33 @@ class SmeagleRunner:
             return False
         return True
 
-    def generate_facts(self, lib):
+    def load_data(self, lib=None, data=None):
         """
-        Generate facts for one entry.
+        Common function to derive json data and a library.
+        Each is optional to be provided, and we are flexible to accept either.
         """
-        data = self.load_data(lib)
+        if not data and not lib:
+            sys.exit("You must provide data or a library path.")            
+        if not data:
+            data = self.get_smeagle_data(lib)
+
+        if not lib:
+            lib = data.get('library', 'unknown')
 
         # Cut out early if we don't have the records
         if not data:
             sys.exit("Cannot find database entry for %s." % lib)
+        return data, lib
 
-        setup = FactGenerator(data[0])
+    def generate_facts(self, lib=None, data=None):
+        """
+        Generate facts for one entry.
+        """
+        data, _ = self.load_data(lib, data)
+        setup = FactGenerator(data)
         setup.solve()
 
-    def get_smeagle_data(self, lib):
+    def get_smeagle_data(self, lib=None, data=None):
         """
         Get smeagle data
         """
@@ -553,7 +566,7 @@ class SmeagleRunner:
             logger.warning("Non-zero exit code for Smeagle %s" % res["message"])
         return res
 
-    def stability_test(self, lib1, lib2, detail=False):
+    def stability_test(self, lib1, lib2, detail=False, data1=None, data2=None):
         """
         Run the stability test for two entries.
         """
@@ -562,8 +575,8 @@ class SmeagleRunner:
             logger.exit("Logic program %s does not exist!" % self.stability_lp)
 
         # First get facts from smeagle
-        lib1_res = self.get_smeagle_data(lib1)
-        lib2_res = self.get_smeagle_data(lib2)
+        lib1_res, lib1 = self.load_data(lib1, data1)
+        lib2_res, lib2 = self.load_data(lib2, data2)
 
         # The spliced lib and original (assume failure)
         res = {"original_lib": lib1, "lib": lib2, "prediction": False}
