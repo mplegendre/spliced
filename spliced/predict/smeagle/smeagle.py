@@ -532,12 +532,12 @@ class SmeagleRunner:
         Each is optional to be provided, and we are flexible to accept either.
         """
         if not data and not lib:
-            sys.exit("You must provide data or a library path.")            
+            sys.exit("You must provide data or a library path.")
         if not data:
             data = self.get_smeagle_data(lib)
 
         if not lib:
-            lib = data.get('library', 'unknown')
+            lib = data.get("library", "unknown")
 
         # Cut out early if we don't have the records
         if not data:
