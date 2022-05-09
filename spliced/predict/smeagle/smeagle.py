@@ -321,13 +321,107 @@ class FactGenerator(SolverBase):
         """
         return self.driver.solve(self.setup, facts_only=True)
 
-
 class GeneratorBase:
     """
     The GeneratorBase is the base for any kind of Setup (fact generator or solve)
     Base functions to set up an ABI Stability and Compatability Solver.
     """
 
+    def update_location(self, location, indirection, offset):
+        loc_offset = location[0]
+        loc_str = location[1]
+
+        if indirection:
+            if loc_offset != 0:
+                loc_str = str(loc_offset) + "+" + loc_str
+                loc_offset = 0
+            loc_str = "*(" + loc_str + ")"
+        if offset:
+            loc_offset = loc_offset + offset
+        return (loc_offset, loc_str)
+
+    def location_str(self, location, toplevel_pointer):
+        loc_offset = location[0]
+        loc_str = location[1]
+        newstr = ""
+        if loc_offset != 0:
+            newstr = str(loc_offset) + "+" + loc_str
+        else:
+            newstr = loc_str
+        if toplevel_pointer:
+            newstr = "*(" + newstr + ")"
+        return newstr
+
+    def strip_pointer_from_type(self, fieldtype):
+        if fieldtype[-1:] != "*":
+            print("#Warning: Could not remove pointer from typename")
+            return fieldtype
+        return fieldtype[:-1].rstrip()
+
+    def type_to_smeagle_type(self, fieldtype):
+        if fieldtype == "long int":
+            return "Integer64"
+        if fieldtype == "int":
+            return "Integer32"
+        if fieldtype == "char":
+            return "Integer8"
+        print("#Warning: Could not convert type %s to smeagle type", fieldtype)
+        return fieldtype
+            
+            
+    def output_fact(self, libname, functionname, direction, facttype, location, factname, factclass):
+        print("abi_typelocation(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\"). # %s" %
+              (libname, functionname, direction, facttype, location, factname))
+    
+    def generate_facts_for_type(self, libname, functionname, is_param, paraminfo, param_type, param_base_name, location, direction, toplevel_pointer, visitedtypes):
+
+        param_name = paraminfo["name"]
+        fields = paraminfo.get("fields", [])
+        param_class = paraminfo["class"]
+
+        if toplevel_pointer == None:
+            toplevel_pointer = param_class == "Pointer"
+            
+        param_type = paraminfo["type"]
+        
+        # If we have an underlying type, use name, type, from there
+        if "underlying_type" in paraminfo:
+            param_name = paraminfo["underlying_type"].get("name") or param_name
+            
+            # Use these fields (unless they aren't defined)
+            param_class= paraminfo["underlying_type"].get("class") or param_class
+            param_type = paraminfo["underlying_type"].get("type") or param_type
+            
+            # If the param has fields, continue printing until we are done
+            fields = paraminfo["underlying_type"].get("fields", []) or fields
+
+            if param_class == "Struct":
+                if param_type in visitedtypes:
+                    #We've seen this type.  Don't recurse
+                    fields = []
+                visitedtypes.append(param_type)
+
+        if param_base_name:
+            param_name = param_base_name + "/" + param_name
+
+        if param_class != "Struct" and param_class != "Function":
+            indirections = int(paraminfo.get("indirections", "0"))
+            while indirections > 0:
+                self.output_fact(libname, functionname, direction, "Pointer64", self.location_str(location, toplevel_pointer), param_name, param_class)
+                location = self.update_location(location, "*", 0)
+                param_type = self.strip_pointer_from_type(param_type)
+                indirections = indirections - 1
+            self.output_fact(libname, functionname, direction, self.type_to_smeagle_type(param_type), self.location_str(location, toplevel_pointer), param_name, param_class)
+                
+        # While we have fields, keep adding them as facts until no more
+        while fields:
+            field = fields.pop(0)
+            offset = int(field.get("offset", "0"))
+            field_location = self.update_location(location, None, offset)
+            field_class = field["class"]
+
+            self.generate_facts_for_type(libname, functionname, is_param, field, field_class, param_name, field_location, direction, toplevel_pointer, visitedtypes)
+        
     def add_library(self, lib, identifier=None):
         """
         Given a loaded Smeagle Model, generate facts for it.
@@ -375,74 +469,18 @@ class GeneratorBase:
         seen = set()
 
         for param in func.get("parameters", []):
-
-            # These values assume no underlying type (defaults)
-            param_name = param["name"]
-            param_type = param["class"]  # param['type'] is compiler specific
-
-            # If the param has fields, continue printing until we are done
-            fields = param.get("fields", [])
-
-            # If we have an underlying type, use name, type, from there
-            if "underlying_type" in param:
-                param_name = param["underlying_type"].get("name") or param_name
-
-                # Use these fields (unless they aren't defined)
-                param_type = param["underlying_type"].get("class") or param_type
-
-                # If the param has fields, continue printing until we are done
-                fields = param["underlying_type"].get("fields", []) or fields
-
-            # Location and direction are always with the original parameter
-            self.gen.fact(
-                fn.abi_typelocation(
-                    libname,
-                    func["name"],
-                    param_name,
-                    param_type,
-                    param["location"],
-                    param["direction"],
-                    param.get("indirections", "0"),
-                )
-            )
-
-            # While we have fields, keep adding them as facts until no more
-            while fields:
-                field = fields.pop(0)
-                self.gen.fact(
-                    # The library, function name, direction and location are the same
-                    fn.abi_typelocation(
-                        libname,
-                        func["name"],
-                        field.get("name", ""),
-                        field.get("class", ""),
-                        param["location"],
-                        param["direction"],
-                        field.get("indirections", "0"),
-                    )
-                )
-                # Fields can have nested fields
-                fields += field.get("fields", [])
-
-            # If no identifier, skip the last step
-            if not identifier:
-                continue
-
-            # This is only needed for the stability model to identify membership
-            # of a particular function symbol, etc. with a library set (e.g., a or b)
-            # Symbol, Type, Register, Direction, Pointer Indirections
-            args = [
-                func["name"],
-                param["class"],
-                param["location"],
-                param["direction"],
-                param.get("indirections", "0"),
-            ]
-            fact = AspFunction("is_%s" % identifier, args=args)
-            if fact not in seen:
-                self.gen.fact(fact)
-                seen.add(fact)
-
+            visitedtypes = []
+            location = (0, param["location"])
+            paramtype = param["class"]
+            direction = "import"
+            self.generate_facts_for_type(libname, func["name"], True, param, paramtype, "", location, direction, None, visitedtypes)
+            
+        for param in func.get("return", []):
+            visitedtypes = []
+            location = (0, param["location"])
+            paramtype = param["class"]
+            direction = "export"
+            self.generate_facts_for_type(libname, func["name"], False, param, paramtype, "", location, direction, None, visitedtypes)            
 
 class StabilitySolverSetup(GeneratorBase):
     """
@@ -560,7 +598,7 @@ class SmeagleRunner:
             logger.exit("Library %s does not exist!" % lib)
 
         # Entrypoint is to Smeagle executable
-        cmd = ["singularity", "run", self.container, "-l", lib]
+        cmd = ["/g/g0/legendre/workspace/smeagle/splicedvenv/bin/runsmeagle", lib]
         res = utils.run_command(cmd)
         if res["return_code"] != 0:
             logger.warning("Non-zero exit code for Smeagle %s" % res["message"])
